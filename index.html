@@ -2,78 +2,144 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>CandyEd 🍭 Clase Super A</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>CandyEd 🍭 Play Store Level</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --pink: #FF6FB5; --blue: #4FA8E8; --yellow: #FFE135; --green: #4ADE80; --purple: #C084FC; }
+        :root { 
+            --pink: #FF6FB5; --pink-dark: #D14D8B;
+            --blue: #4FA8E8; --blue-dark: #3582B8;
+            --yellow: #FFE135; --yellow-dark: #D4B815;
+            --green: #4ADE80; --green-dark: #32A85B;
+            --purple: #C084FC; --purple-dark: #9356D1;
+            --orange: #FF9F43; --orange-dark: #D47926;
+            --text: #2D3436;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
-        body { font-family: 'Nunito', sans-serif; background: linear-gradient(-45deg, #FFDEE9, #B5FFFC, #FFE135, #FDF2F8); background-size: 400% 400%; animation: gradBG 12s ease infinite; height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        body { 
+            font-family: 'Nunito', sans-serif; color: var(--text);
+            background: linear-gradient(-45deg, #FFDEE9, #B5FFFC, #FFF2A8, #FDF2F8); 
+            background-size: 400% 400%; animation: gradBG 15s ease infinite; 
+            height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; 
+        }
         @keyframes gradBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* EL TREN LIBRE */
-        .train-container { position: fixed; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
-        .train { position: absolute; font-size: 4rem; animation: trainTravel 20s linear infinite; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1)); }
+        /* EL TREN INTELIGENTE */
+        .train-container { position: fixed; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: hidden; }
+        .train { 
+            position: absolute; font-size: 4rem; left: -300px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));
+            animation: trainTravel 15s linear infinite; 
+        }
         @keyframes trainTravel {
-            0% { left: -200px; top: 80%; transform: rotate(0deg); }
-            25% { top: 75%; transform: rotate(-5deg); }
-            50% { left: 50%; top: 85%; transform: rotate(5deg); }
-            75% { top: 80%; transform: rotate(-2deg); }
-            100% { left: 110%; top: 85%; transform: rotate(0deg); }
+            0% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(35vw) rotate(-3deg); }
+            50% { transform: translateX(70vw) rotate(2deg); }
+            100% { transform: translateX(150vw) rotate(0deg); }
         }
 
-        /* INTERFAZ PREMIUM */
-        .wrap { width: 96vw; height: 94vh; max-width: 520px; background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); border: 8px solid white; border-radius: 60px; display: flex; flex-direction: column; align-items: center; padding: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.1); position: relative; z-index: 10; }
-        .screen { display: none; width: 100%; flex-direction: column; align-items: center; flex: 1; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow-y: auto; }
-        .screen.active { display: flex; }
+        /* INTERFAZ APP ANDROID (3D & Glassmorphism) */
+        .wrap { 
+            width: 96vw; height: 95vh; max-width: 480px; 
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 6px solid rgba(255,255,255,0.9); border-radius: 45px; 
+            display: flex; flex-direction: column; align-items: center; padding: 25px 20px; 
+            box-shadow: 0 40px 80px rgba(0,0,0,0.15), inset 0 10px 20px rgba(255,255,255,0.8); 
+            position: relative; z-index: 10; 
+        }
         
-        .brand { font-family: 'Fredoka One', cursive; font-size: 3.8rem; background: linear-gradient(45deg, var(--pink), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(2px 2px white); margin: 10px 0; }
-        .nav-btn { position: absolute; top: 20px; left: 20px; background: white; border: none; border-radius: 20px; padding: 12px; font-size: 1.5rem; cursor: pointer; box-shadow: 0 6px 0 #eee; z-index: 100; transition: 0.1s; }
-        .nav-btn:active { transform: translateY(3px); box-shadow: 0 3px 0 #eee; }
+        .screen { display: none; width: 100%; flex-direction: column; align-items: center; flex: 1; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; }
+        .screen::-webkit-scrollbar { display: none; }
+        .screen.active { display: flex; animation: slideIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
-        /* ICONOS SVG ORIGINALES */
-        .svg-icon { width: 45px; height: 45px; margin-bottom: 8px; fill: currentColor; }
+        .brand { 
+            font-family: 'Fredoka One', cursive; font-size: 3.5rem; text-align: center;
+            background: linear-gradient(to bottom, var(--pink), var(--purple)); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            filter: drop-shadow(0px 4px 2px rgba(0,0,0,0.1)); margin-bottom: 20px; 
+        }
 
-        /* GRID Y CARDS */
-        .grid { display: grid; gap: 18px; width: 100%; margin-top: 10px; }
-        .card { background: white; border-radius: 35px; border: 4px solid white; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 12px 0 rgba(0,0,0,0.05); cursor: pointer; transition: 0.2s; min-height: 120px; padding: 15px; text-align: center; color: var(--text); font-weight: 900; }
-        .card:active { transform: translateY(6px); box-shadow: 0 6px 0 rgba(0,0,0,0.05); }
+        /* BOTONES 3D ESTILO JUEGO MÓVIL */
+        .nav-btn { 
+            position: absolute; top: 20px; left: 20px; 
+            background: white; border: none; border-radius: 50%; width: 55px; height: 55px; 
+            font-size: 1.5rem; cursor: pointer; z-index: 100;
+            box-shadow: 0 8px 0 #d1d1d1, 0 15px 20px rgba(0,0,0,0.1); transition: all 0.1s;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .nav-btn:active { transform: translateY(8px); box-shadow: 0 0 0 #d1d1d1, 0 5px 10px rgba(0,0,0,0.1); }
 
-        /* JUEGO */
-        .mascot-row { display: flex; align-items: center; gap: 15px; min-height: 110px; width: 100%; justify-content: center; }
-        .mascot { font-size: 5rem; animation: float 2s infinite ease-in-out; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .speech-bubble { background: white; padding: 15px 25px; border-radius: 30px; font-weight: 900; box-shadow: 0 6px 0 #f0f0f0; max-width: 220px; font-size: 1.1rem; border: 2px solid #f9f9f9; }
-        .q-card { background: white; border-radius: 45px; width: 100%; padding: 30px; text-align: center; font-size: 4.5rem; font-weight: 900; border: 8px solid var(--purple); margin: 15px 0; box-shadow: 0 15px 30px rgba(0,0,0,0.05); }
-        .ans-btn { background: white; border: none; border-radius: 30px; padding: 25px; font-size: 2.2rem; font-weight: 900; font-family: 'Nunito'; cursor: pointer; box-shadow: 0 10px 0 #f0f0f0; transition: 0.1s; }
-        .ans-btn.correct { background: var(--green); color: white; transform: scale(1.05); }
-        .ans-btn.wrong { background: var(--yellow); animation: shake 0.4s; }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+        .grid { display: grid; gap: 20px; width: 100%; padding-bottom: 20px; }
+        .card { 
+            background: white; border-radius: 30px; border: none;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            box-shadow: 0 10px 0 #e0e0e0, 0 15px 20px rgba(0,0,0,0.08); 
+            cursor: pointer; transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); 
+            min-height: 130px; padding: 20px; text-align: center; font-weight: 900; font-size: 1.2rem;
+            position: relative; overflow: hidden;
+        }
+        .card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 40%; background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0)); border-radius: 30px 30px 0 0; }
+        .card:active { transform: translateY(10px); box-shadow: 0 0 0 #e0e0e0, 0 5px 10px rgba(0,0,0,0.1); }
+        .svg-icon { width: 55px; height: 55px; margin-bottom: 12px; fill: currentColor; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1)); }
 
-        /* FX */
-        .bubble-pro { position: fixed; border-radius: 50%; background: rgba(255,255,255,0.3); border: 2px solid white; z-index: 5; cursor: pointer; }
+        /* SECCIÓN DE JUEGO */
+        .mascot-row { display: flex; align-items: center; gap: 15px; min-height: 100px; width: 100%; justify-content: center; margin-bottom: 10px;}
+        .mascot { font-size: 4.5rem; animation: float 2.5s infinite ease-in-out; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); }
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-15px) rotate(5deg); } }
+        
+        .speech-bubble { 
+            background: white; padding: 15px 25px; border-radius: 30px; font-weight: 900; 
+            box-shadow: 0 8px 0 #e0e0e0; font-size: 1.2rem; color: var(--purple-dark);
+            position: relative;
+        }
+        
+        .q-card { 
+            background: linear-gradient(135deg, white, #f9f9f9); border-radius: 40px; width: 100%; 
+            padding: 40px 20px; text-align: center; font-size: 4rem; font-weight: 900; 
+            border: 6px solid var(--purple); margin: 10px 0 25px 0; 
+            box-shadow: 0 12px 0 var(--purple-dark), 0 20px 30px rgba(0,0,0,0.15); color: var(--text);
+            text-shadow: 2px 2px 0px #eee; line-height: 1.1;
+        }
+        
+        .ans-btn { 
+            background: white; border: none; border-radius: 25px; padding: 25px 10px; 
+            font-size: 2.2rem; font-weight: 900; font-family: 'Nunito'; cursor: pointer; 
+            box-shadow: 0 10px 0 #e0e0e0, 0 15px 20px rgba(0,0,0,0.1); 
+            transition: all 0.1s; color: var(--blue-dark);
+            display: flex; justify-content: center; align-items: center;
+        }
+        .ans-btn:active { transform: translateY(10px); box-shadow: 0 0 0 #e0e0e0; }
+        .ans-btn.correct { background: var(--green); color: white; box-shadow: 0 10px 0 var(--green-dark); animation: pop 0.4s; }
+        .ans-btn.correct:active { box-shadow: 0 0 0 var(--green-dark); }
+        .ans-btn.wrong { background: var(--yellow); color: var(--text); box-shadow: 0 10px 0 var(--yellow-dark); animation: shake 0.4s; }
+        
+        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px) rotate(-5deg); } 75% { transform: translateX(10px) rotate(5deg); } }
+
+        .bubble-pro { position: fixed; border-radius: 50%; background: rgba(255,255,255,0.4); border: 2px solid rgba(255,255,255,0.8); z-index: 5; cursor: pointer; backdrop-filter: blur(5px); }
     </style>
 </head>
 <body onclick="startCandyWorld()">
 
 <div class="train-container">
-    <div class="train">🚂🚃🚃🚃🍭</div>
+    <div class="train" id="bg-train">🚂🚃🚃🍭</div>
 </div>
 
 <div class="wrap">
-    <div id="scr-lang" class="screen active">
-        <h1 class="brand">CandyEd</h1>
-        <div class="mascot">🦄</div>
+    <div id="scr-lang" class="screen active" style="justify-content: center;">
+        <h1 class="brand" style="font-size: 4rem;">CandyEd</h1>
+        <div class="mascot" style="font-size: 6rem; margin-bottom: 30px;">🦄</div>
         <div class="grid" style="grid-template-columns: 1fr;">
-            <div class="card" onclick="setLang('es')" style="color:var(--pink); min-height: 100px;"><h1>🇪🇸</h1>ESPAÑOL</div>
-            <div class="card" onclick="setLang('en')" style="color:var(--blue); min-height: 100px;"><h1>🇺🇸</h1>ENGLISH</div>
+            <div class="card" onclick="setLang('es')" style="color:var(--pink); min-height: 110px;"><h1 style="font-size:2.5rem;">🇪🇸 ESPAÑOL</h1></div>
+            <div class="card" onclick="setLang('en')" style="color:var(--blue); min-height: 110px;"><h1 style="font-size:2.5rem;">🇺🇸 ENGLISH</h1></div>
         </div>
     </div>
 
     <div id="scr-main" class="screen">
         <button class="nav-btn" onclick="showScreen('scr-lang')">🏠</button>
         <h1 class="brand">CandyEd</h1>
-        <div class="grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="grid" style="grid-template-columns: 1fr 1fr; margin-top: 20px;">
             <div class="card" onclick="setMode('num')" style="color: var(--pink);">
                 <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19,13H5V11H19V13M12,5L7,10H17L12,5M12,19L17,14H7L12,19Z"/></svg>
                 <span id="t-num"></span>
@@ -87,47 +153,61 @@
 
     <div id="scr-diff" class="screen">
         <button class="nav-btn" onclick="showScreen('scr-main')">⬅️</button>
-        <h1 class="brand" style="font-size: 2.8rem;">Niveles</h1>
-        <div class="grid">
-            <div class="card" onclick="setDiff('noob')" style="flex-direction:row; gap:20px; color: var(--green); min-height: 90px;"><span>🐣</span><b id="d-n"></b></div>
-            <div class="card" onclick="setDiff('mid')" style="flex-direction:row; gap:20px; color: var(--orange); min-height: 90px;"><span>🚀</span><b id="d-m"></b></div>
-            <div class="card" onclick="setDiff('pro')" style="flex-direction:row; gap:20px; color: var(--purple); min-height: 90px;"><span>🏆</span><b id="d-p"></b></div>
+        <h1 class="brand" style="font-size: 3rem;">Niveles</h1>
+        <div class="grid" style="margin-top: 20px;">
+            <div class="card" onclick="setDiff('noob', 1)" style="flex-direction:row; gap:20px; color: var(--green); min-height: 100px;"><span style="font-size:2.5rem;">🐣</span><b id="d-n"></b></div>
+            <div class="card" onclick="setDiff('mid', 2)" style="flex-direction:row; gap:20px; color: var(--orange); min-height: 100px;"><span style="font-size:2.5rem;">🚀</span><b id="d-m"></b></div>
+            <div class="card" onclick="setDiff('pro', 3)" style="flex-direction:row; gap:20px; color: var(--purple); min-height: 100px;"><span style="font-size:2.5rem;">🏆</span><b id="d-p"></b></div>
         </div>
     </div>
 
     <div id="scr-list" class="screen">
         <button class="nav-btn" onclick="showScreen('scr-diff')">⬅️</button>
-        <h2 id="list-title" style="margin: 15px 0; color:var(--purple); font-family:'Fredoka One';"></h2>
-        <div class="grid" id="game-items" style="grid-template-columns: 1fr 1fr; padding-bottom: 30px;"></div>
+        <h2 id="list-title" style="margin: 10px 0 20px 0; font-size: 2.2rem; color:var(--pink); font-family:'Fredoka One'; text-align: center; text-transform: uppercase;"></h2>
+        <div class="grid" id="game-items" style="grid-template-columns: 1fr 1fr; padding-bottom: 40px;"></div>
     </div>
 
     <div id="scr-game" class="screen">
         <button class="nav-btn" onclick="showScreen('scr-list')">⬅️</button>
+        <h3 id="game-title-hud" style="font-family:'Fredoka One'; color:var(--purple); margin-bottom: 10px;">JUEGO</h3>
         <div class="mascot-row">
             <div id="m-emoji" class="mascot">🦄</div>
             <div id="m-msg" class="speech-bubble">¡Vamos!</div>
         </div>
         <div id="q-card" class="q-card"></div>
-        <div id="ans-grid" class="grid" style="grid-template-columns: 1fr 1fr;"></div>
+        <div id="ans-grid" class="grid" style="grid-template-columns: 1fr 1fr; padding-bottom: 30px;"></div>
     </div>
 </div>
 
 <script>
-let lang='es', mode='num', diff='noob', currentGameId=1;
+// VARIABLES GLOBALES
+let lang='es', mode='num', diff='noob', diffMult=1, currentGameId=1;
+
+// DICCIONARIOS Y DATOS
 const T = {
-    es: { num:'NÚMEROS', let:'LETRAS', n:'2-4 AÑOS', m:'5-7 AÑOS', p:'8-10 AÑOS', ok:['¡GENIAL!','¡SÚPER!','¡BIEN!'], no:['¡Casi!','¡Tú puedes!','¡Otra vez!'],
+    es: { num:'NÚMEROS', let:'LETRAS', n:'2-4 AÑOS', m:'5-7 AÑOS', p:'8-10 AÑOS', ok:['¡GENIAL!','¡SÚPER!','¡BIEN!','¡BRAVO!'], no:['¡Casi!','¡Tú puedes!','¡Otra vez!'],
           gn:['Cuenta','Suma','Resta','Mayor','Menor','Siguiente','Anterior','Pares','Falta','Dobles'],
           gl:['Letra','Vocales','ABC','Rimas','Adivina','Mayúsculas','Minúsculas','Palabras','Lectura','Escritura'] },
-    en: { num:'NUMBERS', let:'LETTERS', n:'2-4 YRS', m:'5-7 YRS', p:'8-10 YRS', ok:['GREAT!','AWESOME!','NICE!'], no:['Almost!','Try again!','You can!'],
+    en: { num:'NUMBERS', let:'LETTERS', n:'2-4 YRS', m:'5-7 YRS', p:'8-10 YRS', ok:['GREAT!','AWESOME!','NICE!','WOW!'], no:['Almost!','Try again!','You can!'],
           gn:['Count','Add','Minus','Bigger','Smaller','Next','Before','Evens','Missing','Doubles'],
           gl:['Letter','Vowels','ABC','Rhymes','Guess','Upper','Lower','Words','Reading','Writing'] }
 };
+const EMOJIS = ['🍎','🐶','🚗','⭐','🍓','🎈','🦖','🦋'];
 
-/* --- AUDIO ENGINE PREMIUM --- */
+// --- MOTOR DE AUDIO GENERATIVO AVANZADO ---
 const AC = new (window.AudioContext || window.webkitAudioContext)();
 let musicStarted = false;
 
-function playNote(freq, dur=0.2, type='triangle', vol=0.1) {
+// 3 Melodías diferentes que rotan
+const melodies = [
+    [523.25, 659.25, 783.99, 1046.50], // Alegre (Do Mayor)
+    [587.33, 698.46, 880.00, 1174.66], // Explorador (Re Menor)
+    [783.99, 987.77, 1174.66, 1567.98] // Espacial (Sol Mayor)
+];
+let currentMelody = 0;
+
+function playNote(freq, dur=0.2, type='triangle', vol=0.08) {
+    if(AC.state === 'suspended') AC.resume();
     const o = AC.createOscillator(), g = AC.createGain();
     o.connect(g); g.connect(AC.destination);
     o.type = type; o.frequency.setValueAtTime(freq, AC.currentTime);
@@ -140,20 +220,31 @@ function startCandyWorld() {
     if(AC.state === 'suspended') AC.resume();
     if(!musicStarted) {
         musicStarted = true;
-        // Melodía aleatoria de fondo (Xilófono)
         setInterval(() => {
-            const notes = [523.25, 587.33, 659.25, 698.46, 784.00, 880.00];
-            playNote(notes[Math.floor(Math.random()*notes.length)], 0.5, 'sine', 0.05);
-        }, 1500);
+            const notes = melodies[currentMelody];
+            playNote(notes[Math.floor(Math.random()*notes.length)], 0.4, 'sine', 0.03);
+            if(Math.random() > 0.8) currentMelody = (currentMelody + 1) % melodies.length;
+        }, 1200);
     }
     createBubble();
 }
 
-/* NAVEGACIÓN */
+// --- LÓGICA DEL TREN ALEATORIO ---
+const train = document.getElementById('bg-train');
+train.addEventListener('animationiteration', () => {
+    // Cambia la altura, tamaño, vagones y velocidad en cada vuelta
+    train.style.top = Math.floor(Math.random() * 70 + 10) + '%';
+    train.style.fontSize = Math.floor(Math.random() * 3 + 3) + 'rem';
+    train.style.animationDuration = Math.floor(Math.random() * 10 + 12) + 's';
+    const vagones = '🚃'.repeat(Math.floor(Math.random() * 4 + 1));
+    train.innerText = `🚂${vagones}🍭`;
+});
+
+// --- NAVEGACIÓN ---
 function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    playNote(800, 0.1, 'sine');
+    playNote(800, 0.15, 'sine', 0.1);
 }
 
 function setLang(l) {
@@ -168,22 +259,28 @@ function setLang(l) {
 
 function setMode(m) { mode = m; showScreen('scr-diff'); }
 
-function setDiff(d) {
-    diff = d;
+function setDiff(d, mult) {
+    diff = d; diffMult = mult;
     const container = document.getElementById('game-items'); container.innerHTML = '';
     const gameNames = mode === 'num' ? T[lang].gn : T[lang].gl;
     document.getElementById('list-title').innerText = T[lang][mode];
+    
     gameNames.forEach((name, i) => {
         const c = document.createElement('div'); c.className = 'card';
-        c.innerHTML = `<div style="font-size:0.8rem; opacity:0.6;">GAME ${i+1}</div><b>${name}</b>`;
+        // Colores alternos para las tarjetas
+        const colors = ['var(--pink)', 'var(--blue)', 'var(--green)', 'var(--orange)', 'var(--purple)'];
+        c.style.color = colors[i % colors.length];
+        c.innerHTML = `<div style="font-size:0.9rem; opacity:0.7; margin-bottom:5px;">ID: 0${i+1}</div><b style="font-size:1.4rem;">${name}</b>`;
         c.onclick = () => { currentGameId = i+1; startLevel(); };
         container.appendChild(c);
     });
     showScreen('scr-list');
 }
 
-/* --- MOTOR DE JUEGOS INTELIGENTE --- */
+// --- MOTOR DE JUEGOS ---
 function startLevel() {
+    const titles = mode === 'num' ? T[lang].gn : T[lang].gl;
+    document.getElementById('game-title-hud').innerText = titles[currentGameId-1].toUpperCase();
     generateGame();
     showScreen('scr-game');
 }
@@ -191,61 +288,146 @@ function startLevel() {
 function updateMascot(win) {
     const m = document.getElementById('m-emoji'), msg = document.getElementById('m-msg');
     if(win) {
-        m.innerText = '🥳'; playNote(1200, 0.2);
-        msg.innerText = T[lang].ok[Math.floor(Math.random()*3)];
-        setTimeout(() => { m.innerText = '🦄'; }, 1000);
+        m.innerText = ['🥳','🤩','😎','🎉'][Math.floor(Math.random()*4)]; 
+        playNote(1046.50, 0.1, 'square', 0.1); setTimeout(()=>playNote(1318.51, 0.2, 'square', 0.1), 100);
+        msg.innerText = T[lang].ok[Math.floor(Math.random()*T[lang].ok.length)];
+        setTimeout(() => { m.innerText = '🦄'; }, 1200);
     } else {
-        m.innerText = '😊'; playNote(300, 0.3, 'square');
-        msg.innerText = T[lang].no[Math.floor(Math.random()*3)];
+        m.innerText = '😅'; playNote(300, 0.3, 'sawtooth', 0.1);
+        msg.innerText = T[lang].no[Math.floor(Math.random()*T[lang].no.length)];
     }
+}
+
+// Utilidades para generar respuestas
+function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
+function getWrongNumbers(correct, count, maxOffset=5) {
+    let res = new Set([correct]);
+    while(res.size < count) {
+        let n = correct + rand(-maxOffset, maxOffset);
+        if(n >= 0 && n !== correct) res.add(n);
+    }
+    return shuffle([...res]);
+}
+function getWrongLetters(correct, count) {
+    const abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let res = new Set([correct]);
+    while(res.size < count) { res.add(abc[rand(0, 25)]); }
+    return shuffle([...res]);
 }
 
 function generateGame() {
     const q = document.getElementById('q-card'), grid = document.getElementById('ans-grid');
-    grid.innerHTML = '';
-    
-    // Lógica dinámica basada en el modo y el ID del juego
-    let correct, opts;
+    grid.innerHTML = ''; q.style.fontSize = '4rem';
+    let correct, opts = [];
 
+    // LÓGICA DE MATEMÁTICAS (1-10)
     if(mode === 'num') {
-        let a = Math.floor(Math.random()*10), b = Math.floor(Math.random()*5);
-        if(currentGameId === 2) { // SUMA
-            q.innerText = `${a}+${b}`; correct = a+b;
-        } else if(currentGameId === 4) { // MAYOR
-            q.innerText = `${a} vs ${b+5}`; correct = Math.max(a, b+5);
-        } else { // CUENTA / BÁSICO
-            q.innerText = a; correct = n = a;
+        let max = 5 * diffMult; 
+        let a = rand(1, max), b = rand(1, max);
+
+        switch(currentGameId) {
+            case 1: // Cuenta
+                let emoji = EMOJIS[rand(0, EMOJIS.length-1)];
+                q.innerText = emoji.repeat(a); q.style.fontSize = '3rem';
+                correct = a; opts = getWrongNumbers(correct, 4, 3); break;
+            case 2: // Suma
+                q.innerText = `${a} + ${b}`; correct = a + b; opts = getWrongNumbers(correct, 4, 4); break;
+            case 3: // Resta
+                if(b>a) [a,b]=[b,a]; q.innerText = `${a} - ${b}`; correct = a - b; opts = getWrongNumbers(correct, 4, 3); break;
+            case 4: // Mayor
+                b = a + rand(1, 5); if(Math.random()>0.5) [a,b]=[b,a];
+                q.innerText = `${a} vs ${b}`; correct = Math.max(a,b); opts = [a, b, a+b, Math.abs(a-b)]; break;
+            case 5: // Menor
+                b = a + rand(1, 5); if(Math.random()>0.5) [a,b]=[b,a];
+                q.innerText = `${a} vs ${b}`; correct = Math.min(a,b); opts = [a, b, a+b, Math.abs(a-b)]; break;
+            case 6: // Siguiente
+                q.innerText = `${a}, ${a+1}, ?`; correct = a+2; opts = getWrongNumbers(correct, 4, 3); break;
+            case 7: // Anterior
+                q.innerText = `?, ${a+1}, ${a+2}`; correct = a; opts = getWrongNumbers(correct, 4, 3); break;
+            case 8: // Pares
+                correct = rand(1, max)*2; let w1=correct+1, w2=correct+3, w3=correct-1; 
+                q.innerText = lang==='es'?'PAR':'EVEN'; opts = shuffle([correct, w1, w2, Math.abs(w3)]); break;
+            case 9: // Falta
+                q.innerText = `${a}, ?, ${a+2}`; correct = a+1; opts = getWrongNumbers(correct, 4, 2); break;
+            case 10: // Dobles
+                q.innerText = `2 x ${a}`; correct = a*2; opts = getWrongNumbers(correct, 4, 4); break;
         }
-        opts = [correct, correct+1, correct+2, Math.abs(correct-1)].sort(() => Math.random()-0.5);
-    } else {
-        const abc = "ABCDEFGHIJ";
-        let char = abc[Math.floor(Math.random()*abc.length)];
-        q.innerText = char; correct = char;
-        opts = [correct, "K", "L", "M"].sort(() => Math.random()-0.5);
+    } 
+    // LÓGICA DE LETRAS (1-10)
+    else {
+        const abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const voc = "AEIOU";
+        const wordsES = { 'GATO':'PATO', 'LUNA':'CUNA', 'SOL':'GOL', 'ROJO':'OJO' };
+        const wordsEN = { 'CAT':'HAT', 'SUN':'BUN', 'DOG':'LOG', 'RED':'BED' };
+        
+        switch(currentGameId) {
+            case 1: // Letra
+                correct = abc[rand(0,25)]; q.innerText = correct; opts = getWrongLetters(correct, 4); break;
+            case 2: // Vocales
+                correct = voc[rand(0,4)]; q.innerText = lang==='es'?'VOCAL':'VOWEL'; 
+                let resV = new Set([correct]); while(resV.size<4) resV.add(abc[rand(5,25)]); opts = shuffle([...resV]); break;
+            case 3: // ABC
+                let idx = rand(0, 22); q.innerText = `${abc[idx]}, ${abc[idx+1]}, ?`; correct = abc[idx+2]; opts = getWrongLetters(correct, 4); break;
+            case 4: // Rimas
+                let dict = lang==='es' ? wordsES : wordsEN;
+                let keys = Object.keys(dict); let w = keys[rand(0, keys.length-1)];
+                q.innerText = w; q.style.fontSize = '3rem'; correct = dict[w]; 
+                opts = shuffle([correct, keys[(keys.indexOf(w)+1)%keys.length], lang==='es'?'MESA':'CAR', lang==='es'?'SAPO':'TREE']); break;
+            case 5: // Adivina (falta letra)
+                let w5 = lang==='es'?'SOL':'SUN'; q.innerText = `S _ ${w5[2]}`; correct = w5[1]; opts = getWrongLetters(correct, 4); break;
+            case 6: // Mayúsculas
+                correct = abc[rand(0,25)]; q.innerText = correct.toLowerCase(); opts = getWrongLetters(correct, 4); break;
+            case 7: // Minúsculas
+                let c7 = abc[rand(0,25)]; q.innerText = c7; correct = c7.toLowerCase(); 
+                let res7 = new Set([correct]); while(res7.size<4) res7.add(abc[rand(0,25)].toLowerCase()); opts = shuffle([...res7]); break;
+            case 8: // Palabras
+                let emoji8 = EMOJIS[rand(0,3)]; q.innerText = emoji8; 
+                if(emoji8==='🍎') { correct = lang==='es'?'MESA':'APPLE'; opts=['UVA','APPLE','PERA','CAR']; } // Simplificado
+                else { correct = lang==='es'?'PERRO':'DOG'; opts=['CAT','BIRD','FISH','DOG']; }
+                opts = shuffle(opts); q.style.fontSize = '5rem'; break;
+            case 9: // Lectura (lee y busca emoji)
+                q.innerText = lang==='es'?'ESTRELLA':'STAR'; q.style.fontSize = '2.5rem'; correct = '⭐'; opts = shuffle(['⭐','🚗','🎈','🦖']); break;
+            case 10: // Escritura
+                q.innerText = '🚗'; correct = lang==='es'?'AUTO':'CAR'; opts = shuffle([correct, lang==='es'?'BICI':'BUS', 'MOTO', 'TREN']); break;
+        }
     }
 
-    opts.forEach(opt => {
+    // Asegurar que no hay duplicados fallidos en opts y renderizar
+    let finalOpts = [...new Set(opts)];
+    while(finalOpts.length < 4) {
+        let extra = mode === 'num' ? rand(1, 20) : "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[rand(0,25)];
+        if(!finalOpts.includes(extra)) finalOpts.push(extra);
+    }
+    
+    finalOpts.forEach((opt, idx) => {
         const btn = document.createElement('button'); btn.className = 'ans-btn';
         btn.innerText = opt;
+        // Asignar colores aleatorios a los botones para que se vea más lúdico
+        const colors = ['var(--pink)', 'var(--blue)', 'var(--orange)', 'var(--purple)'];
+        btn.style.color = colors[idx % colors.length];
+        
         btn.onclick = () => {
             if(opt == correct) {
                 btn.classList.add('correct'); updateMascot(true);
-                setTimeout(generateGame, 1500);
+                setTimeout(generateGame, 1200);
             } else {
                 btn.classList.add('wrong'); updateMascot(false);
+                setTimeout(()=>btn.classList.remove('wrong'), 400);
             }
         };
         grid.appendChild(btn);
     });
 }
 
+// FX de Burbujas al tocar el fondo
 function createBubble() {
     const b = document.createElement('div'); b.className = 'bubble-pro';
-    const s = Math.random()*60+20;
+    const s = Math.random()*50+20;
     b.style.width = b.style.height = s+'px'; b.style.left = Math.random()*90+'vw'; b.style.bottom = '-60px';
     b.onclick = () => { playNote(1500, 0.05); b.remove(); };
     document.body.appendChild(b);
-    b.animate([{transform:'translateY(0)'},{transform:'translateY(-110vh)'}], {duration: 8000}).onfinish = () => b.remove();
+    b.animate([{transform:'translateY(0) scale(1)'},{transform:'translateY(-110vh) scale(1.5)'}], {duration: Math.random()*4000+4000}).onfinish = () => b.remove();
 }
 </script>
 </body>
