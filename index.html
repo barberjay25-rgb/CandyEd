@@ -3,145 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>CandyEd Premium 🍭 Super A Edition</title>
+    <title>CandyEd 🍭 Clase Super A</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --pink: #FF6FB5; --blue: #4FA8E8; --yellow: #FFE135; --green: #4ADE80; --purple: #C084FC; --white: #FFFFFF; }
+        :root { --pink: #FF6FB5; --blue: #4FA8E8; --yellow: #FFE135; --green: #4ADE80; --purple: #C084FC; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
         body { font-family: 'Nunito', sans-serif; background: linear-gradient(-45deg, #FFDEE9, #B5FFFC, #FFE135, #FDF2F8); background-size: 400% 400%; animation: gradBG 12s ease infinite; height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; }
         @keyframes gradBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* ATMÓSFERA SENSORIAL PREMIUM */
-        #magic-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-        .train { position: fixed; bottom: 8%; left: -400px; font-size: 3.5rem; z-index: 2; animation: trainMove 15s linear infinite, trainRock 1s ease-in-out infinite; }
-        @keyframes trainMove { 0% { left: -400px; } 100% { left: 110%; } }
-        @keyframes trainRock { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(3deg) translateY(-5px); } }
+        /* EL TREN LIBRE */
+        .train-container { position: fixed; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+        .train { position: absolute; font-size: 4rem; animation: trainTravel 20s linear infinite; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1)); }
+        @keyframes trainTravel {
+            0% { left: -200px; top: 80%; transform: rotate(0deg); }
+            25% { top: 75%; transform: rotate(-5deg); }
+            50% { left: 50%; top: 85%; transform: rotate(5deg); }
+            75% { top: 80%; transform: rotate(-2deg); }
+            100% { left: 110%; top: 85%; transform: rotate(0deg); }
+        }
 
-        .shooting-star { position: fixed; height: 4px; border-radius: 999px; z-index: 1; animation: shoot 1.2s linear forwards; }
-        @keyframes shoot { 0% { transform: translateX(0) scaleX(0); opacity: 1; } 100% { transform: translateX(800px) scaleX(4); opacity: 0; } }
-
-        .balloon { position: fixed; z-index: 5; font-size: 3.5rem; cursor: pointer; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); display: flex; flex-direction: column; align-items: center; }
-        .balloon::after { content: ''; width: 2px; height: 50px; background: rgba(0,0,0,0.1); margin-top: -5px; }
-
-        .bubble-pro { position: fixed; border-radius: 50%; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5), rgba(255,255,255,0.1)); border: 2px solid rgba(255,255,255,0.3); box-shadow: inset 0 0 15px rgba(255,255,255,0.4); cursor: pointer; z-index: 5; }
-
-        /* INTERFAZ */
-        .wrap { width: 96vw; height: 94vh; max-width: 500px; background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); border: 6px solid white; border-radius: 55px; display: flex; flex-direction: column; align-items: center; padding: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.1); position: relative; z-index: 10; }
-        .screen { display: none; width: 100%; flex-direction: column; align-items: center; flex: 1; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        /* INTERFAZ PREMIUM */
+        .wrap { width: 96vw; height: 94vh; max-width: 520px; background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); border: 8px solid white; border-radius: 60px; display: flex; flex-direction: column; align-items: center; padding: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.1); position: relative; z-index: 10; }
+        .screen { display: none; width: 100%; flex-direction: column; align-items: center; flex: 1; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow-y: auto; }
         .screen.active { display: flex; }
-        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        .brand { font-family: 'Fredoka One', cursive; font-size: 3.8rem; background: linear-gradient(45deg, var(--pink), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(2px 2px white); margin: 10px 0; }
+        .nav-btn { position: absolute; top: 20px; left: 20px; background: white; border: none; border-radius: 20px; padding: 12px; font-size: 1.5rem; cursor: pointer; box-shadow: 0 6px 0 #eee; z-index: 100; transition: 0.1s; }
+        .nav-btn:active { transform: translateY(3px); box-shadow: 0 3px 0 #eee; }
 
-        .brand { font-family: 'Fredoka One', cursive; font-size: 3.5rem; background: linear-gradient(45deg, var(--pink), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(2px 2px white); }
-        .nav-btn { position: absolute; top: 20px; left: 20px; background: white; border: none; border-radius: 15px; padding: 10px; font-size: 1.5rem; cursor: pointer; box-shadow: 0 5px 0 #ddd; z-index: 100; }
+        /* ICONOS SVG ORIGINALES */
+        .svg-icon { width: 45px; height: 45px; margin-bottom: 8px; fill: currentColor; }
 
-        /* MASCOTA Y BURBUJA */
-        .mascot-box { display: flex; align-items: center; gap: 15px; margin: 10px 0; min-height: 100px; }
-        .mascot { font-size: 4.5rem; transition: 0.3s; }
-        .mascot.jump { animation: mascotJump 0.5s ease; }
-        @keyframes mascotJump { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3) translateY(-20px); } }
-        .speech-bubble { background: white; padding: 12px 20px; border-radius: 25px; font-weight: 900; color: #555; position: relative; box-shadow: 0 5px 0 #eee; max-width: 200px; }
+        /* GRID Y CARDS */
+        .grid { display: grid; gap: 18px; width: 100%; margin-top: 10px; }
+        .card { background: white; border-radius: 35px; border: 4px solid white; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 12px 0 rgba(0,0,0,0.05); cursor: pointer; transition: 0.2s; min-height: 120px; padding: 15px; text-align: center; color: var(--text); font-weight: 900; }
+        .card:active { transform: translateY(6px); box-shadow: 0 6px 0 rgba(0,0,0,0.05); }
 
         /* JUEGO */
-        .grid { display: grid; gap: 15px; width: 100%; margin-top: 15px; }
-        .card { background: white; border-radius: 35px; border: 4px solid white; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 10px 0 rgba(0,0,0,0.05); cursor: pointer; transition: 0.1s; height: 110px; }
-        .card:active { transform: translateY(5px); box-shadow: 0 5px 0 rgba(0,0,0,0.05); }
-        .q-display { background: white; border-radius: 40px; padding: 30px; width: 100%; text-align: center; font-size: 4rem; font-weight: 900; color: var(--purple); border: 6px solid var(--purple); margin-bottom: 20px; }
-        .ans-btn { background: white; border: none; border-radius: 25px; padding: 20px; font-size: 2rem; font-weight: 900; font-family: 'Nunito'; cursor: pointer; box-shadow: 0 8px 0 #eee; transition: 0.1s; }
-        .ans-btn.correct { background: var(--green); color: white; transform: scale(1.1); }
-        .ans-btn.wrong { background: var(--yellow); animation: wobble 0.4s; }
-        @keyframes wobble { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        .mascot-row { display: flex; align-items: center; gap: 15px; min-height: 110px; width: 100%; justify-content: center; }
+        .mascot { font-size: 5rem; animation: float 2s infinite ease-in-out; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .speech-bubble { background: white; padding: 15px 25px; border-radius: 30px; font-weight: 900; box-shadow: 0 6px 0 #f0f0f0; max-width: 220px; font-size: 1.1rem; border: 2px solid #f9f9f9; }
+        .q-card { background: white; border-radius: 45px; width: 100%; padding: 30px; text-align: center; font-size: 4.5rem; font-weight: 900; border: 8px solid var(--purple); margin: 15px 0; box-shadow: 0 15px 30px rgba(0,0,0,0.05); }
+        .ans-btn { background: white; border: none; border-radius: 30px; padding: 25px; font-size: 2.2rem; font-weight: 900; font-family: 'Nunito'; cursor: pointer; box-shadow: 0 10px 0 #f0f0f0; transition: 0.1s; }
+        .ans-btn.correct { background: var(--green); color: white; transform: scale(1.05); }
+        .ans-btn.wrong { background: var(--yellow); animation: shake 0.4s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+        /* FX */
+        .bubble-pro { position: fixed; border-radius: 50%; background: rgba(255,255,255,0.3); border: 2px solid white; z-index: 5; cursor: pointer; }
     </style>
 </head>
-<body onclick="initAudio()">
+<body onclick="startCandyWorld()">
 
-<div id="magic-layer"></div>
-<div class="train">🚂🚃🎠🚃🍭</div>
+<div class="train-container">
+    <div class="train">🚂🚃🚃🚃🍭</div>
+</div>
 
 <div class="wrap">
     <div id="scr-lang" class="screen active">
         <h1 class="brand">CandyEd</h1>
         <div class="mascot">🦄</div>
-        <div class="grid">
-            <div class="card" style="color:var(--pink)" onclick="setLang('es')"><h1>🇪🇸</h1>ESPAÑOL</div>
-            <div class="card" style="color:var(--blue)" onclick="setLang('en')"><h1>🇺🇸</h1>ENGLISH</div>
+        <div class="grid" style="grid-template-columns: 1fr;">
+            <div class="card" onclick="setLang('es')" style="color:var(--pink); min-height: 100px;"><h1>🇪🇸</h1>ESPAÑOL</div>
+            <div class="card" onclick="setLang('en')" style="color:var(--blue); min-height: 100px;"><h1>🇺🇸</h1>ENGLISH</div>
         </div>
     </div>
 
     <div id="scr-main" class="screen">
         <button class="nav-btn" onclick="showScreen('scr-lang')">🏠</button>
         <h1 class="brand">CandyEd</h1>
-        <div class="mascot">🌟</div>
         <div class="grid" style="grid-template-columns: 1fr 1fr;">
-            <div class="card" onclick="setMode('num')"><h1>🔢</h1><span id="txt-num"></span></div>
-            <div class="card" onclick="setMode('let')"><h1>🔤</h1><span id="txt-let"></span></div>
+            <div class="card" onclick="setMode('num')" style="color: var(--pink);">
+                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19,13H5V11H19V13M12,5L7,10H17L12,5M12,19L17,14H7L12,19Z"/></svg>
+                <span id="t-num"></span>
+            </div>
+            <div class="card" onclick="setMode('let')" style="color: var(--blue);">
+                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M13,12H11V10H13M13,16H11V14H13M17,12H15V10H17M17,16H15V14H17M21,6V18A2,2 0 0,1 19,20H5C3.89,20 3,19.1 3,18V6A2,2 0 0,1 5,4H19A2,2 0 0,1 21,6Z"/></svg>
+                <span id="t-let"></span>
+            </div>
         </div>
     </div>
 
     <div id="scr-diff" class="screen">
         <button class="nav-btn" onclick="showScreen('scr-main')">⬅️</button>
-        <h1 class="brand" style="font-size: 2.5rem;">CandyEd</h1>
+        <h1 class="brand" style="font-size: 2.8rem;">Niveles</h1>
         <div class="grid">
-            <div class="card" onclick="setDiff('noob')" style="height:85px;flex-direction:row;gap:20px;"><span>🐣</span><b id="d-n"></b></div>
-            <div class="card" onclick="setDiff('mid')" style="height:85px;flex-direction:row;gap:20px;"><span>🚀</span><b id="d-m"></b></div>
-            <div class="card" onclick="setDiff('pro')" style="height:85px;flex-direction:row;gap:20px;"><span>🏆</span><b id="d-p"></b></div>
+            <div class="card" onclick="setDiff('noob')" style="flex-direction:row; gap:20px; color: var(--green); min-height: 90px;"><span>🐣</span><b id="d-n"></b></div>
+            <div class="card" onclick="setDiff('mid')" style="flex-direction:row; gap:20px; color: var(--orange); min-height: 90px;"><span>🚀</span><b id="d-m"></b></div>
+            <div class="card" onclick="setDiff('pro')" style="flex-direction:row; gap:20px; color: var(--purple); min-height: 90px;"><span>🏆</span><b id="d-p"></b></div>
         </div>
     </div>
 
     <div id="scr-list" class="screen">
         <button class="nav-btn" onclick="showScreen('scr-diff')">⬅️</button>
-        <h2 id="list-title" style="margin: 15px 0; color:var(--pink)"></h2>
-        <div class="grid" id="game-items" style="grid-template-columns:1fr 1fr; overflow-y:auto; padding-bottom:20px;"></div>
+        <h2 id="list-title" style="margin: 15px 0; color:var(--purple); font-family:'Fredoka One';"></h2>
+        <div class="grid" id="game-items" style="grid-template-columns: 1fr 1fr; padding-bottom: 30px;"></div>
     </div>
 
     <div id="scr-game" class="screen">
         <button class="nav-btn" onclick="showScreen('scr-list')">⬅️</button>
-        <div class="mascot-box">
-            <div id="mascot-emoji" class="mascot">🦄</div>
-            <div id="mascot-msg" class="speech-bubble">¡Tú puedes!</div>
+        <div class="mascot-row">
+            <div id="m-emoji" class="mascot">🦄</div>
+            <div id="m-msg" class="speech-bubble">¡Vamos!</div>
         </div>
-        <div id="q-display" class="q-display"></div>
+        <div id="q-card" class="q-card"></div>
         <div id="ans-grid" class="grid" style="grid-template-columns: 1fr 1fr;"></div>
     </div>
 </div>
 
 <script>
-let lang = 'es', mode = 'num', diff = 'noob';
+let lang='es', mode='num', diff='noob', currentGameId=1;
 const T = {
-    es: { num:'NÚMEROS', let:'LETRAS', n:'2-4 AÑOS', m:'5-7 AÑOS', p:'8-10 AÑOS', ok:['¡GENIAL!','¡SUPER!','¡BRAVO!'], no:['¡Casi!','¡Intenta otra vez!','¡Tú puedes!'] },
-    en: { num:'NUMBERS', let:'LETTERS', n:'2-4 YRS', m:'5-7 YRS', p:'8-10 YRS', ok:['GREAT!','AWESOME!','BRAVO!'], no:['Almost!','Try again!','You can do it!'] }
+    es: { num:'NÚMEROS', let:'LETRAS', n:'2-4 AÑOS', m:'5-7 AÑOS', p:'8-10 AÑOS', ok:['¡GENIAL!','¡SÚPER!','¡BIEN!'], no:['¡Casi!','¡Tú puedes!','¡Otra vez!'],
+          gn:['Cuenta','Suma','Resta','Mayor','Menor','Siguiente','Anterior','Pares','Falta','Dobles'],
+          gl:['Letra','Vocales','ABC','Rimas','Adivina','Mayúsculas','Minúsculas','Palabras','Lectura','Escritura'] },
+    en: { num:'NUMBERS', let:'LETTERS', n:'2-4 YRS', m:'5-7 YRS', p:'8-10 YRS', ok:['GREAT!','AWESOME!','NICE!'], no:['Almost!','Try again!','You can!'],
+          gn:['Count','Add','Minus','Bigger','Smaller','Next','Before','Evens','Missing','Doubles'],
+          gl:['Letter','Vowels','ABC','Rhymes','Guess','Upper','Lower','Words','Reading','Writing'] }
 };
 
-/* AUDIO ENGINE */
+/* --- AUDIO ENGINE PREMIUM --- */
 const AC = new (window.AudioContext || window.webkitAudioContext)();
-let bgm = null;
+let musicStarted = false;
 
-function playTone(f, d=0.1, t='sine') {
+function playNote(freq, dur=0.2, type='triangle', vol=0.1) {
     const o = AC.createOscillator(), g = AC.createGain();
     o.connect(g); g.connect(AC.destination);
-    o.type = t; o.frequency.setValueAtTime(f, AC.currentTime);
-    g.gain.setValueAtTime(0.1, AC.currentTime);
-    o.start(); o.stop(AC.currentTime + d);
+    o.type = type; o.frequency.setValueAtTime(freq, AC.currentTime);
+    g.gain.setValueAtTime(vol, AC.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, AC.currentTime + dur);
+    o.start(); o.stop(AC.currentTime + dur);
 }
 
-function initAudio() { 
+function startCandyWorld() {
     if(AC.state === 'suspended') AC.resume();
-    if(!bgm) { 
-        setInterval(() => playTone(523, 0.2, 'triangle'), 2000); // Música de fondo simple
-        bgm = true;
+    if(!musicStarted) {
+        musicStarted = true;
+        // Melodía aleatoria de fondo (Xilófono)
+        setInterval(() => {
+            const notes = [523.25, 587.33, 659.25, 698.46, 784.00, 880.00];
+            playNote(notes[Math.floor(Math.random()*notes.length)], 0.5, 'sine', 0.05);
+        }, 1500);
     }
+    createBubble();
 }
 
 /* NAVEGACIÓN */
 function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    playTone(600);
+    playNote(800, 0.1, 'sine');
 }
 
 function setLang(l) {
     lang = l;
-    document.getElementById('txt-num').innerText = T[l].num;
-    document.getElementById('txt-let').innerText = T[l].let;
+    document.getElementById('t-num').innerText = T[l].num;
+    document.getElementById('t-let').innerText = T[l].let;
     document.getElementById('d-n').innerText = T[l].n;
     document.getElementById('d-m').innerText = T[l].m;
     document.getElementById('d-p').innerText = T[l].p;
@@ -153,90 +171,82 @@ function setMode(m) { mode = m; showScreen('scr-diff'); }
 function setDiff(d) {
     diff = d;
     const container = document.getElementById('game-items'); container.innerHTML = '';
-    const names = mode === 'num' ? ['Cuenta','Suma','Resta','Mayor','Menor','Siguiente','Anterior','Pares','Formas','Lógica'] : ['Letra Inicial','Vocales','ABC','Rimas','Deletreo','Mayúsculas','Minúsculas','Palabras','Lectura','Escritura'];
+    const gameNames = mode === 'num' ? T[lang].gn : T[lang].gl;
     document.getElementById('list-title').innerText = T[lang][mode];
-    for(let i=1; i<=10; i++) {
+    gameNames.forEach((name, i) => {
         const c = document.createElement('div'); c.className = 'card';
-        c.innerHTML = `<b>${mode==='num'?'🔢':'🔤'} ${names[i-1]}</b>`;
-        c.onclick = () => startLevel(i);
+        c.innerHTML = `<div style="font-size:0.8rem; opacity:0.6;">GAME ${i+1}</div><b>${name}</b>`;
+        c.onclick = () => { currentGameId = i+1; startLevel(); };
         container.appendChild(c);
-    }
+    });
     showScreen('scr-list');
 }
 
-/* MOTOR DE JUEGOS Y MASCOTA */
-function startLevel(id) {
-    generateTask();
+/* --- MOTOR DE JUEGOS INTELIGENTE --- */
+function startLevel() {
+    generateGame();
     showScreen('scr-game');
 }
 
-function updateMascot(type) {
-    const m = document.getElementById('mascot-emoji');
-    const msg = document.getElementById('mascot-msg');
-    if(type === 'win') {
-        m.innerText = '🥳'; m.classList.add('jump');
+function updateMascot(win) {
+    const m = document.getElementById('m-emoji'), msg = document.getElementById('m-msg');
+    if(win) {
+        m.innerText = '🥳'; playNote(1200, 0.2);
         msg.innerText = T[lang].ok[Math.floor(Math.random()*3)];
-        playTone(1000, 0.3);
-        setTimeout(() => { m.classList.remove('jump'); m.innerText = '🦄'; }, 1000);
+        setTimeout(() => { m.innerText = '🦄'; }, 1000);
     } else {
-        m.innerText = '😊';
+        m.innerText = '😊'; playNote(300, 0.3, 'square');
         msg.innerText = T[lang].no[Math.floor(Math.random()*3)];
-        playTone(300, 0.2, 'square');
     }
 }
 
-function generateTask() {
-    const q = document.getElementById('q-display');
-    const aGrid = document.getElementById('ans-grid'); aGrid.innerHTML = '';
+function generateGame() {
+    const q = document.getElementById('q-card'), grid = document.getElementById('ans-grid');
+    grid.innerHTML = '';
     
+    // Lógica dinámica basada en el modo y el ID del juego
+    let correct, opts;
+
     if(mode === 'num') {
-        let n = Math.floor(Math.random()*10); q.innerText = n;
-        let options = [n, (n+1)%10, (n+2)%10, (n+3)%10].sort(() => Math.random()-0.5);
-        options.forEach(opt => {
-            const btn = document.createElement('button'); btn.className = 'ans-btn'; btn.innerText = opt;
-            btn.onclick = () => { if(opt === n) { btn.classList.add('correct'); updateMascot('win'); setTimeout(generateTask, 1500); } else { btn.classList.add('wrong'); updateMascot('try'); } };
-            aGrid.appendChild(btn);
-        });
+        let a = Math.floor(Math.random()*10), b = Math.floor(Math.random()*5);
+        if(currentGameId === 2) { // SUMA
+            q.innerText = `${a}+${b}`; correct = a+b;
+        } else if(currentGameId === 4) { // MAYOR
+            q.innerText = `${a} vs ${b+5}`; correct = Math.max(a, b+5);
+        } else { // CUENTA / BÁSICO
+            q.innerText = a; correct = n = a;
+        }
+        opts = [correct, correct+1, correct+2, Math.abs(correct-1)].sort(() => Math.random()-0.5);
     } else {
-        const letters = "ABCDEFGHIJ"; let l = letters[Math.floor(Math.random()*letters.length)]; q.innerText = l;
-        let options = [l, "K", "L", "M"].sort(() => Math.random()-0.5);
-        options.forEach(opt => {
-            const btn = document.createElement('button'); btn.className = 'ans-btn'; btn.innerText = opt;
-            btn.onclick = () => { if(opt === l) { btn.classList.add('correct'); updateMascot('win'); setTimeout(generateTask, 1500); } else { btn.classList.add('wrong'); updateMascot('try'); } };
-            aGrid.appendChild(btn);
-        });
+        const abc = "ABCDEFGHIJ";
+        let char = abc[Math.floor(Math.random()*abc.length)];
+        q.innerText = char; correct = char;
+        opts = [correct, "K", "L", "M"].sort(() => Math.random()-0.5);
     }
+
+    opts.forEach(opt => {
+        const btn = document.createElement('button'); btn.className = 'ans-btn';
+        btn.innerText = opt;
+        btn.onclick = () => {
+            if(opt == correct) {
+                btn.classList.add('correct'); updateMascot(true);
+                setTimeout(generateGame, 1500);
+            } else {
+                btn.classList.add('wrong'); updateMascot(false);
+            }
+        };
+        grid.appendChild(btn);
+    });
 }
 
-/* ELEMENTOS PRO ANDROID */
-function createFX() {
-    // Estrellas Fugaces
-    const s = document.createElement('div'); s.className = 'shooting-star';
-    const colors = [document.documentElement.style.getPropertyValue('--pink'), '#4FACFE', '#FFD700'];
-    const color = colors[Math.floor(Math.random()*3)];
-    s.style.background = `linear-gradient(90deg, white, ${color})`;
-    s.style.top = Math.random()*50+'vh'; s.style.left = '-100px'; s.style.width = '150px';
-    document.body.appendChild(s); setTimeout(() => s.remove(), 1200);
-
-    // Globos
-    const b = document.createElement('div'); b.className = 'balloon';
-    b.innerText = ['🎈','🍭','💖'][Math.floor(Math.random()*3)];
-    b.style.left = Math.random()*90+'vw'; b.style.bottom = '-100px';
-    b.onclick = () => { playTone(1200); b.remove(); };
-    document.body.appendChild(b);
-    b.animate([{transform:'translateY(0)'},{transform:'translateY(-120vh)'}], {duration: 10000});
-}
-
-function createBubble(x, y, size=70, child=false) {
+function createBubble() {
     const b = document.createElement('div'); b.className = 'bubble-pro';
-    b.style.left = x+'px'; b.style.top = y+'px'; b.style.width = b.style.height = size+'px';
-    b.onclick = (e) => { e.stopPropagation(); playTone(800); if(!child && size > 30) for(let i=0; i<3; i++) createBubble(x+Math.random()*40, y+Math.random()*40, size/2, true); b.remove(); };
+    const s = Math.random()*60+20;
+    b.style.width = b.style.height = s+'px'; b.style.left = Math.random()*90+'vw'; b.style.bottom = '-60px';
+    b.onclick = () => { playNote(1500, 0.05); b.remove(); };
     document.body.appendChild(b);
-    b.animate([{transform:'translateY(0)'},{transform:'translateY(-100px)'}], {duration: 3000, iterations: Infinity, direction: 'alternate'});
+    b.animate([{transform:'translateY(0)'},{transform:'translateY(-110vh)'}], {duration: 8000}).onfinish = () => b.remove();
 }
-
-setInterval(createFX, 4000);
-setInterval(() => createBubble(Math.random()*window.innerWidth, window.innerHeight-100), 3000);
 </script>
 </body>
 </html>
