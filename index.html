@@ -3,166 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CandyEd - Aprendizaje Mágico</title>
+    <title>CandyEd - Experiencia Total</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --pink: #FF6FB5;
-            --blue: #4FA8E8;
-            --green: #4ADE80;
-            --orange: #FB923C;
-            --yellow: #FFE135;
-        }
-        
+        :root { --pink: #FF6FB5; --blue: #4FA8E8; --yellow: #FFE135; --white: #FFFFFF; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-        /* FONDO DINÁMICO CON VIDA */
         body {
             font-family: 'Fredoka', sans-serif;
-            background: linear-gradient(-45deg, #FFDEE9, #B5FFFC, #E0F2FE, #FDF2F8);
+            background: linear-gradient(-45deg, #FFDEE9, #B5FFFC, #FFE135, #FDF2F8);
             background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
-            height: 100vh;
+            animation: gradientBG 15s ease infinite;
+            height: 100vh; overflow: hidden;
             display: flex; justify-content: center; align-items: center;
-            overflow: hidden;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        /* CAPAS DE MAGIA (Burbujas y Estrellas) */
+        .magic-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        
+        .star { position: absolute; background: white; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation: starFly 3s linear infinite; }
+        @keyframes starFly { 
+            0% { transform: scale(0) rotate(0deg); opacity: 1; } 
+            100% { transform: scale(1.5) rotate(180deg) translate(100px, 100px); opacity: 0; } 
         }
+
+        /* EL TREN */
+        .train { position: absolute; bottom: 10%; left: -500px; font-size: 4rem; animation: trainPass 10s linear infinite; z-index: 1; }
+        @keyframes trainPass { 0% { left: -500px; } 100% { left: 110%; } }
 
         .app-container {
-            width: 94vw; height: 92vh;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(15px);
-            border: 8px solid white;
-            border-radius: 60px;
+            width: 94vw; height: 92vh; background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px); border: 8px solid white; border-radius: 60px;
             display: flex; flex-direction: column; align-items: center;
-            padding: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.1);
-            position: relative;
+            padding: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.1); position: relative; z-index: 10;
         }
 
-        /* MASCOTA NIVEL DIOS */
-        .character-box {
-            filter: drop-shadow(0 10px 20px rgba(255, 111, 181, 0.3));
-            animation: float 3s infinite ease-in-out;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-15px) scale(1.05); }
-        }
-
-        .brand-name {
-            font-size: 4.5rem;
-            background: linear-gradient(45deg, var(--pink), var(--blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 0;
-            filter: drop-shadow(3px 3px 0px white);
-        }
-
-        .slogan { font-size: 1.3rem; color: #64748b; font-weight: 700; margin-bottom: 20px; }
-
-        /* BOTONES DE JUEGO Y NIVELES */
-        .grid-layout { display: grid; gap: 20px; width: 100%; max-width: 480px; }
-        
+        /* BOTONES Y CARDS */
+        .grid-layout { display: grid; gap: 15px; width: 100%; max-width: 500px; overflow-y: auto; padding: 10px; }
         .card {
-            background: white; border-radius: 40px; border: 5px solid white;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            box-shadow: 0 12px 0 #E2E8F0; transition: 0.1s; cursor: pointer;
+            background: white; border-radius: 35px; border: 5px solid white;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 0 #E2E8F0; transition: 0.1s; cursor: pointer;
         }
-        .card:active { transform: translateY(8px); box-shadow: 0 4px 0 #E2E8F0; }
+        .card:active { transform: scale(0.95) translateY(5px); }
 
-        .card-game { height: 160px; font-size: 1.5rem; font-weight: 700; }
-        .card-level { 
-            height: 90px; flex-direction: row; justify-content: flex-start; 
-            padding-left: 30px; gap: 20px; color: #475569;
-        }
-
-        .icon-lg { font-size: 4rem; }
-        .icon-md { font-size: 2.5rem; }
-        .age-text { font-size: 0.9rem; opacity: 0.7; display: block; }
-
-        .screen { display: none; width: 100%; flex-direction: column; align-items: center; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .screen { display: none; width: 100%; flex-direction: column; align-items: center; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .active { display: flex; }
-        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        .back-btn { margin-top: 20px; font-weight: 700; color: #64748b; cursor: pointer; text-decoration: underline; }
+        .brand-name { font-size: 4rem; background: linear-gradient(45deg, var(--pink), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(2px 2px white); }
     </style>
 </head>
-<body>
+<body onclick="startMagic()">
+
+    <div class="magic-layer" id="magic-layer"></div>
+    <div class="train">🚂🚃🏠🚃🍭</div>
 
     <div class="app-container">
         
         <div id="scr-lang" class="screen active">
-            <h1 class="brand-name" style="margin-top: 40px;">CandyEd</h1>
-            <p class="slogan">Elige tu idioma / Choose language</p>
+            <h1 class="brand-name">CandyEd</h1>
+            <p style="font-weight: 700; color: #666; margin-bottom: 20px;">¡Toca para empezar! / Tap to start!</p>
             <div class="grid-layout" style="grid-template-columns: 1fr;">
-                <div class="card card-game" onclick="setLang('es')" style="height:100px; color: var(--pink)">ESPAÑOL 🇪🇸</div>
-                <div class="card card-game" onclick="setLang('en')" style="height:100px; color: var(--blue)">ENGLISH 🇺🇸</div>
+                <div class="card" onclick="setLang('es')" style="height:100px; color: var(--pink); font-size: 1.5rem; font-weight:700;">ESPAÑOL 🇪🇸</div>
+                <div class="card" onclick="setLang('en')" style="height:100px; color: var(--blue); font-size: 1.5rem; font-weight:700;">ENGLISH 🇺🇸</div>
             </div>
         </div>
 
         <div id="scr-main" class="screen">
-            <div class="character-box">
-                <svg width="120" height="120" viewBox="0 0 100 100">
-                    <defs>
-                        <linearGradient id="candyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#FFDEE9" />
-                            <stop offset="100%" style="stop-color:#B5FFFC" />
-                        </linearGradient>
-                    </defs>
-                    <rect x="10" y="25" width="80" height="65" rx="25" fill="url(#candyGrad)" stroke="white" stroke-width="4"/>
-                    <circle cx="35" cy="55" r="5" fill="#333"/><circle cx="65" cy="55" r="5" fill="#333"/>
-                    <circle cx="25" cy="65" r="6" fill="#FF91A4" opacity="0.6"/><circle cx="75" cy="65" r="6" fill="#FF91A4" opacity="0.6"/>
-                    <path d="M 40 75 Q 50 82 60 75" stroke="#333" stroke-width="4" fill="none" stroke-linecap="round"/>
-                    <circle cx="50" cy="8" r="7" fill="var(--yellow)"><animate attributeName="r" values="7;9;7" dur="1s" repeatCount="indefinite" /></circle>
-                    <line x1="50" y1="25" x2="50" y2="10" stroke="white" stroke-width="3"/>
-                </svg>
-            </div>
             <h1 class="brand-name">CandyEd</h1>
-            <p id="slogan-txt" class="slogan"></p>
             <div class="grid-layout" style="grid-template-columns: 1fr 1fr;">
-                <div class="card card-game" onclick="goToLevels()" style="color: var(--pink); border-bottom: 8px solid var(--pink);">
-                    <span class="icon-lg">🔢</span><span id="txt-num"></span>
+                <div class="card" onclick="goToLevels('num')" style="height:160px; color: var(--pink); border-bottom: 8px solid var(--pink);">
+                    <div style="text-align:center;"><span style="font-size:4rem;">🔢</span><br><b id="txt-num"></b></div>
                 </div>
-                <div class="card card-game" onclick="goToLevels()" style="color: var(--blue); border-bottom: 8px solid var(--blue);">
-                    <span class="icon-lg">ABC</span><span id="txt-let"></span>
+                <div class="card" onclick="goToLevels('let')" style="height:160px; color: var(--blue); border-bottom: 8px solid var(--blue);">
+                    <div style="text-align:center;"><span style="font-size:4rem;">ABC</span><br><b id="txt-let"></b></div>
                 </div>
             </div>
-            <div class="back-btn" onclick="showScreen('scr-lang')">← Idioma</div>
         </div>
 
         <div id="scr-levels" class="screen">
-            <h1 class="brand-name">CandyEd</h1>
-            <p id="level-title" class="slogan"></p>
-            <div class="grid-layout">
-                <div class="card card-level" onclick="alert('Start!')" style="color: var(--blue); border-bottom: 8px solid var(--blue);">
-                    <span class="icon-md">🎯</span>
-                    <div><b id="l-n"></b><br><span class="age-text" id="a-n"></span></div>
-                </div>
-                <div class="card card-level" onclick="alert('Start!')" style="color: var(--green); border-bottom: 8px solid var(--green);">
-                    <span class="icon-md">💎</span>
-                    <div><b id="l-a"></b><br><span class="age-text" id="a-a"></span></div>
-                </div>
-                <div class="card card-level" onclick="alert('Start!')" style="color: var(--orange); border-bottom: 8px solid var(--orange);">
-                    <span class="icon-md">🔥</span>
-                    <div><b id="l-e"></b><br><span class="age-text" id="a-e"></span></div>
-                </div>
+            <h2 id="lvl-title" style="color:var(--pink); margin-bottom:15px;"></h2>
+            <div class="grid-layout" style="grid-template-columns: 1fr 1fr; height: 350px;">
+                <div class="card" style="height:80px; font-size:0.9rem;" onclick="playPop()">🎮 Juego 1</div>
+                <div class="card" style="height:80px; font-size:0.9rem;" onclick="playPop()">🎨 Juego 2</div>
+                <div class="card" style="height:80px; font-size:0.9rem;" onclick="playPop()">🚀 Juego 3</div>
+                <div class="card" style="height:80px; font-size:0.9rem;" onclick="playPop()">🦁 Juego 4</div>
+                <div class="card" style="height:80px; font-size:0.9rem;" onclick="playPop()">🧩 Juego 5</div>
+                <div class="card" style="height:80px; font-size:0.9rem;" onclick="playPop()">🍭 Juego 6</div>
+                <div class="card" style="height:80px; font-size:0.9rem;" onclick="playPop()">🎸 Juego 7</div>
+                <div class="card" style="height:80px; font-size:0.9rem;" onclick="playPop()">🌈 Juego 8</div>
+                <div class="card" style="height:80px; font-size:0.9rem;" onclick="playPop()">🍎 Juego 9</div>
+                <div class="card" style="height:80px; font-size:0.9rem;" onclick="playPop()">💎 Juego 10</div>
             </div>
-            <div class="back-btn" onclick="showScreen('scr-main')">← Volver</div>
+            <div onclick="showScreen('scr-main')" style="margin-top:15px; font-weight:700; color:#666; cursor:pointer;">← Volver</div>
         </div>
 
     </div>
 
     <script>
-        const translations = {
-            es: { slogan: "aprendizaje divertido", num: "NÚMEROS", let: "LETRAS", sel: "Elige tu nivel", n: "PRINCIPIANTE", a: "AVANZADO", e: "EXPERTO", age: "años" },
-            en: { slogan: "fun learning", num: "NUMBERS", let: "LETTERS", sel: "Choose level", n: "NOOB", a: "ADVANCED", e: "EXPERT", age: "yrs" }
+        // SISTEMA DE AUDIO (Preparado para tus links de MP3)
+        const audioPop = new Audio('https://www.soundjay.com/buttons/sounds/button-37a.mp3');
+        let musicStarted = false;
+
+        function startMagic() {
+            if(!musicStarted) {
+                // Aquí podrías poner un link a tu música de fondo
+                console.log("Música iniciada");
+                musicStarted = true;
+            }
+            createStar();
+            playPop();
+        }
+
+        function playPop() { audioPop.currentTime = 0; audioPop.play(); }
+
+        function createStar() {
+            const layer = document.getElementById('magic-layer');
+            const star = document.createElement('div');
+            star.className = 'star';
+            const colors = ['#FF6FB5', '#4FA8E8', '#FFE135', '#4ADE80', '#FFFFFF'];
+            star.style.background = colors[Math.floor(Math.random()*colors.length)];
+            star.style.left = Math.random() * window.innerWidth + 'px';
+            star.style.top = Math.random() * window.innerHeight + 'px';
+            star.style.width = star.style.height = (Math.random()*20 + 10) + 'px';
+            layer.appendChild(star);
+            setTimeout(() => star.remove(), 3000);
+        }
+
+        // Burbujas constantes
+        setInterval(() => {
+            const b = document.createElement('div');
+            b.style.position = 'fixed';
+            b.style.bottom = '-50px';
+            b.style.left = Math.random() * 100 + 'vw';
+            b.style.width = b.style.height = Math.random() * 40 + 10 + 'px';
+            b.style.background = 'rgba(255,255,255,0.3)';
+            b.style.borderRadius = '50%';
+            b.style.border = '1px solid white';
+            b.style.transition = '5s linear';
+            b.style.pointerEvents = 'none';
+            document.body.appendChild(b);
+            setTimeout(() => { b.style.transform = `translateY(-110vh) rotate(360deg)`; }, 100);
+            setTimeout(() => b.remove(), 6000);
+        }, 1000);
+
+        const trans = {
+            es: { num: "NÚMEROS", let: "ABC LETRAS", lvl: "Mis 10 Juegos" },
+            en: { num: "NUMBERS", let: "ABC LETTERS", lvl: "My 10 Games" }
         };
 
         function showScreen(id) {
@@ -171,18 +161,13 @@
         }
 
         function setLang(lang) {
-            const t = translations[lang];
-            document.getElementById('slogan-txt').innerText = t.slogan;
-            document.getElementById('txt-num').innerText = t.num;
-            document.getElementById('txt-let').innerText = t.let;
-            document.getElementById('level-title').innerText = t.sel;
-            document.getElementById('l-n').innerText = t.n; document.getElementById('a-n').innerText = `2-4 ${t.age}`;
-            document.getElementById('l-a').innerText = t.a; document.getElementById('a-a').innerText = `5-7 ${t.age}`;
-            document.getElementById('l-e').innerText = t.e; document.getElementById('a-e').innerText = `8-10 ${t.age}`;
+            document.getElementById('txt-num').innerText = trans[lang].num;
+            document.getElementById('txt-let').innerText = trans[lang].let;
+            document.getElementById('lvl-title').innerText = trans[lang].lvl;
             showScreen('scr-main');
         }
 
-        function goToLevels() { showScreen('scr-levels'); }
+        function goToLevels(type) { showScreen('scr-levels'); }
     </script>
 </body>
 </html>
