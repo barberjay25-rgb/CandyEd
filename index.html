@@ -3,23 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CandyEd - Mundo Mágico</title>
+    <title>CandyEd - Aprendizaje Mágico</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --p-grad: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
-            --b-grad: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
-            --candy-pink: #FF8EBC;
-            --candy-blue: #7DD3FC;
+            --pink: #FF6FB5;
+            --blue: #4FA8E8;
+            --green: #4ADE80;
+            --orange: #FB923C;
+            --yellow: #FFE135;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
+        /* FONDO DINÁMICO CON VIDA */
         body {
             font-family: 'Fredoka', sans-serif;
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background: linear-gradient(-45deg, #FFDEE9, #B5FFFC, #E0F2FE, #FDF2F8);
             background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            animation: gradientBG 10s ease infinite;
             height: 100vh;
             display: flex; justify-content: center; align-items: center;
             overflow: hidden;
@@ -33,143 +35,134 @@
 
         .app-container {
             width: 94vw; height: 92vh;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border: 8px solid rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            border: 8px solid white;
             border-radius: 60px;
             display: flex; flex-direction: column; align-items: center;
-            padding: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            padding: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.1);
             position: relative;
         }
 
-        /* MASCOTA MEJORADA */
-        .character-hero {
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
-            animation: heroFloat 3s infinite ease-in-out;
+        /* MASCOTA NIVEL DIOS */
+        .character-box {
+            filter: drop-shadow(0 10px 20px rgba(255, 111, 181, 0.3));
+            animation: float 3s infinite ease-in-out;
             cursor: pointer;
+            margin-bottom: 10px;
         }
-        @keyframes heroFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.05); }
         }
 
         .brand-name {
-            font-size: 4rem;
-            font-weight: 700;
-            background: linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);
+            font-size: 4.5rem;
+            background: linear-gradient(45deg, var(--pink), var(--blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(2px 2px 0px white);
+            margin: 0;
+            filter: drop-shadow(3px 3px 0px white);
         }
 
-        /* GRID DE JUEGOS (10 OPCIONES) */
-        .games-scroll {
-            display: flex;
-            overflow-x: auto;
-            gap: 20px;
-            width: 100%;
-            padding: 20px 10px;
-            scrollbar-width: none; /* Ocultar scroll en Firefox */
-        }
-        .games-scroll::-webkit-scrollbar { display: none; }
+        .slogan { font-size: 1.3rem; color: #64748b; font-weight: 700; margin-bottom: 20px; }
 
-        .game-card {
-            min-width: 160px; height: 200px;
-            background: white; border-radius: 40px;
+        /* BOTONES DE JUEGO Y NIVELES */
+        .grid-layout { display: grid; gap: 20px; width: 100%; max-width: 480px; }
+        
+        .card {
+            background: white; border-radius: 40px; border: 5px solid white;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            box-shadow: 0 15px 0 #f0f0f0;
-            border: 5px solid white; transition: 0.2s;
-            cursor: pointer;
+            box-shadow: 0 12px 0 #E2E8F0; transition: 0.1s; cursor: pointer;
         }
-        .game-card:active { transform: scale(0.9) translateY(10px); box-shadow: 0 5px 0 #f0f0f0; }
+        .card:active { transform: translateY(8px); box-shadow: 0 4px 0 #E2E8F0; }
 
-        .game-card i { font-size: 4rem; margin-bottom: 10px; }
-        .game-card span { font-weight: 700; color: #555; font-size: 1rem; text-align: center; }
-
-        /* COLORES DE JUEGOS */
-        .g-1 { color: #FF6B6B; } .g-2 { color: #4ECDC4; } .g-3 { color: #FFE66D; }
-        .g-4 { color: #FF9FF3; } .g-5 { color: #54a0ff; } .g-6 { color: #5f27cd; }
-
-        .screen { display: none; width: 100%; height: 100%; flex-direction: column; align-items: center; }
-        .active { display: flex; animation: zoomIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        @keyframes zoomIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-        .nav-btn {
-            background: white; padding: 15px 30px; border-radius: 50px;
-            font-weight: 700; color: #e73c7e; margin-top: auto;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer;
+        .card-game { height: 160px; font-size: 1.5rem; font-weight: 700; }
+        .card-level { 
+            height: 90px; flex-direction: row; justify-content: flex-start; 
+            padding-left: 30px; gap: 20px; color: #475569;
         }
+
+        .icon-lg { font-size: 4rem; }
+        .icon-md { font-size: 2.5rem; }
+        .age-text { font-size: 0.9rem; opacity: 0.7; display: block; }
+
+        .screen { display: none; width: 100%; flex-direction: column; align-items: center; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .active { display: flex; }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .back-btn { margin-top: 20px; font-weight: 700; color: #64748b; cursor: pointer; text-decoration: underline; }
     </style>
 </head>
 <body>
 
     <div class="app-container">
         
-        <div id="scr-start" class="screen active">
-            <div class="character-hero" onclick="this.style.transform='scale(1.5)'">
-                <svg width="150" height="150" viewBox="0 0 100 100">
+        <div id="scr-lang" class="screen active">
+            <h1 class="brand-name" style="margin-top: 40px;">CandyEd</h1>
+            <p class="slogan">Elige tu idioma / Choose language</p>
+            <div class="grid-layout" style="grid-template-columns: 1fr;">
+                <div class="card card-game" onclick="setLang('es')" style="height:100px; color: var(--pink)">ESPAÑOL 🇪🇸</div>
+                <div class="card card-game" onclick="setLang('en')" style="height:100px; color: var(--blue)">ENGLISH 🇺🇸</div>
+            </div>
+        </div>
+
+        <div id="scr-main" class="screen">
+            <div class="character-box">
+                <svg width="120" height="120" viewBox="0 0 100 100">
                     <defs>
-                        <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <linearGradient id="candyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" style="stop-color:#FFDEE9" />
                             <stop offset="100%" style="stop-color:#B5FFFC" />
                         </linearGradient>
                     </defs>
-                    <rect x="10" y="25" width="80" height="65" rx="25" fill="url(#bodyGrad)" stroke="white" stroke-width="4"/>
-                    <circle cx="35" cy="55" r="5" fill="#333"/>
-                    <circle cx="37" cy="53" r="1.5" fill="white"/>
-                    <circle cx="65" cy="55" r="5" fill="#333"/>
-                    <circle cx="67" cy="53" r="1.5" fill="white"/>
-                    <circle cx="25" cy="65" r="6" fill="#FF91A4" opacity="0.6"/>
-                    <circle cx="75" cy="65" r="6" fill="#FF91A4" opacity="0.6"/>
+                    <rect x="10" y="25" width="80" height="65" rx="25" fill="url(#candyGrad)" stroke="white" stroke-width="4"/>
+                    <circle cx="35" cy="55" r="5" fill="#333"/><circle cx="65" cy="55" r="5" fill="#333"/>
+                    <circle cx="25" cy="65" r="6" fill="#FF91A4" opacity="0.6"/><circle cx="75" cy="65" r="6" fill="#FF91A4" opacity="0.6"/>
                     <path d="M 40 75 Q 50 82 60 75" stroke="#333" stroke-width="4" fill="none" stroke-linecap="round"/>
-                    <path d="M 50 25 L 50 10" stroke="white" stroke-width="3"/>
-                    <circle cx="50" cy="8" r="6" fill="#FFE135">
-                        <animate attributeName="opacity" values="1;0.5;1" dur="1s" repeatCount="indefinite" />
-                    </circle>
+                    <circle cx="50" cy="8" r="7" fill="var(--yellow)"><animate attributeName="r" values="7;9;7" dur="1s" repeatCount="indefinite" /></circle>
+                    <line x1="50" y1="25" x2="50" y2="10" stroke="white" stroke-width="3"/>
                 </svg>
             </div>
             <h1 class="brand-name">CandyEd</h1>
-            <p style="color: #666; font-weight: 700; margin-bottom: 30px;">¡Toca a Candy para empezar!</p>
-            
-            <div style="display:flex; gap:20px;">
-                <div class="game-card g-1" style="min-width:120px; height:120px;" onclick="setLang('es')">
-                    <span style="font-size:2rem">🇪🇸</span><span>ESPAÑOL</span>
+            <p id="slogan-txt" class="slogan"></p>
+            <div class="grid-layout" style="grid-template-columns: 1fr 1fr;">
+                <div class="card card-game" onclick="goToLevels()" style="color: var(--pink); border-bottom: 8px solid var(--pink);">
+                    <span class="icon-lg">🔢</span><span id="txt-num"></span>
                 </div>
-                <div class="game-card g-5" style="min-width:120px; height:120px;" onclick="setLang('en')">
-                    <span style="font-size:2rem">🇺🇸</span><span>ENGLISH</span>
+                <div class="card card-game" onclick="goToLevels()" style="color: var(--blue); border-bottom: 8px solid var(--blue);">
+                    <span class="icon-lg">ABC</span><span id="txt-let"></span>
                 </div>
             </div>
+            <div class="back-btn" onclick="showScreen('scr-lang')">← Idioma</div>
         </div>
 
-        <div id="scr-games" class="screen">
-            <h2 id="title-selection" style="color:#e73c7e; margin-top:20px; font-size:2rem;">¿A qué jugamos?</h2>
-            <div class="games-scroll">
-                <div class="game-card g-1" onclick="alert('Cargando...')"><i>🔢</i><span id="gn-1"></span></div>
-                <div class="game-card g-2" onclick="alert('Cargando...')"><i>🎨</i><span id="gn-2"></span></div>
-                <div class="game-card g-3" onclick="alert('Cargando...')"><i>🦁</i><span id="gn-3"></span></div>
-                <div class="game-card g-4" onclick="alert('Cargando...')"><i>🧩</i><span id="gn-4"></span></div>
-                <div class="game-card g-5" onclick="alert('Cargando...')"><i>🍎</i><span id="gn-5"></span></div>
-                <div class="game-card g-6" onclick="alert('Cargando...')"><i>🎸</i><span id="gn-6"></span></div>
-                <div class="game-card g-1" onclick="alert('Cargando...')"><i>🚀</i><span id="gn-7"></span></div>
-                <div class="game-card g-2" onclick="alert('Cargando...')"><i>🍭</i><span id="gn-8"></span></div>
-                <div class="game-card g-3" onclick="alert('Cargando...')"><i>🧸</i><span id="gn-9"></span></div>
-                <div class="game-card g-4" onclick="alert('Cargando...')"><i>🌈</i><span id="gn-10"></span></div>
+        <div id="scr-levels" class="screen">
+            <h1 class="brand-name">CandyEd</h1>
+            <p id="level-title" class="slogan"></p>
+            <div class="grid-layout">
+                <div class="card card-level" onclick="alert('Start!')" style="color: var(--blue); border-bottom: 8px solid var(--blue);">
+                    <span class="icon-md">🎯</span>
+                    <div><b id="l-n"></b><br><span class="age-text" id="a-n"></span></div>
+                </div>
+                <div class="card card-level" onclick="alert('Start!')" style="color: var(--green); border-bottom: 8px solid var(--green);">
+                    <span class="icon-md">💎</span>
+                    <div><b id="l-a"></b><br><span class="age-text" id="a-a"></span></div>
+                </div>
+                <div class="card card-level" onclick="alert('Start!')" style="color: var(--orange); border-bottom: 8px solid var(--orange);">
+                    <span class="icon-md">🔥</span>
+                    <div><b id="l-e"></b><br><span class="age-text" id="a-e"></span></div>
+                </div>
             </div>
-            <div class="nav-btn" onclick="showScreen('scr-start')">Volver / Back</div>
+            <div class="back-btn" onclick="showScreen('scr-main')">← Volver</div>
         </div>
 
     </div>
 
     <script>
-        const texts = {
-            es: {
-                sel: "¿A qué jugamos?",
-                names: ["Números", "Colores", "Animales", "Puzles", "Frutas", "Música", "Espacio", "Dulces", "Juguetes", "Formas"]
-            },
-            en: {
-                sel: "What to play?",
-                names: ["Numbers", "Colors", "Animals", "Puzzles", "Fruits", "Music", "Space", "Candy", "Toys", "Shapes"]
-            }
+        const translations = {
+            es: { slogan: "aprendizaje divertido", num: "NÚMEROS", let: "LETRAS", sel: "Elige tu nivel", n: "PRINCIPIANTE", a: "AVANZADO", e: "EXPERTO", age: "años" },
+            en: { slogan: "fun learning", num: "NUMBERS", let: "LETTERS", sel: "Choose level", n: "NOOB", a: "ADVANCED", e: "EXPERT", age: "yrs" }
         };
 
         function showScreen(id) {
@@ -178,12 +171,18 @@
         }
 
         function setLang(lang) {
-            document.getElementById('title-selection').innerText = texts[lang].sel;
-            for(let i=1; i<=10; i++) {
-                document.getElementById(`gn-${i}`).innerText = texts[lang].names[i-1];
-            }
-            showScreen('scr-games');
+            const t = translations[lang];
+            document.getElementById('slogan-txt').innerText = t.slogan;
+            document.getElementById('txt-num').innerText = t.num;
+            document.getElementById('txt-let').innerText = t.let;
+            document.getElementById('level-title').innerText = t.sel;
+            document.getElementById('l-n').innerText = t.n; document.getElementById('a-n').innerText = `2-4 ${t.age}`;
+            document.getElementById('l-a').innerText = t.a; document.getElementById('a-a').innerText = `5-7 ${t.age}`;
+            document.getElementById('l-e').innerText = t.e; document.getElementById('a-e').innerText = `8-10 ${t.age}`;
+            showScreen('scr-main');
         }
+
+        function goToLevels() { showScreen('scr-levels'); }
     </script>
 </body>
 </html>
