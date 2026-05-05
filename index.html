@@ -3,110 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
-    <title>CandyEd 🍭 Play Store Level</title>
+    <title>CandyEd - Original Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --bg-pastel: #EAE6FE; /* Lila clarito de la imagen */
-            --pink: #FF85C0; --pink-dark: #D15B96;
-            --blue: #6BCBFF; --blue-dark: #4A9CCC;
-            --yellow: #FFDE59; --yellow-dark: #D4B63A;
-            --green: #7ED957; --green-dark: #58A33A;
-            --purple: #B088F9; --purple-dark: #865DCE;
-            --orange: #FF914D; --orange-dark: #C9662C;
-            --text: #4A4A4A;
-            --white-glass: rgba(255, 255, 255, 0.95);
+            --bg-main: #EAE6FE; --bg-inner: #F8F7FF;
+            --pink: #FF85C0; --blue: #6BCBFF; --yellow: #FFDE59; 
+            --green: #7ED957; --purple: #B088F9; --orange: #FF914D;
+            --text-dark: #3A3A3A;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
         body { 
-            font-family: 'Nunito', sans-serif; color: var(--text);
-            background: linear-gradient(135deg, #FFDEE9, #EAE6FE, #D4FCFF, #FFF4E6); 
-            background-size: 400% 400%; animation: gradBG 15s ease infinite; 
+            font-family: 'Nunito', sans-serif; color: var(--text-dark);
+            background: linear-gradient(135deg, #FFDEE9, #EAE6FE, #D4FCFF); 
             height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; 
         }
-        @keyframes gradBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* TREN DE FONDO */
+        /* TREN DE FONDO (Transita por todas las pantallas) */
         .train-container { position: fixed; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
-        .train { position: absolute; font-size: 3.5rem; left: -300px; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); animation: trainTravel 18s linear infinite; }
+        .train { position: absolute; font-size: 3.5rem; left: -300px; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); animation: trainTravel 20s linear infinite; }
         @keyframes trainTravel { 0% { transform: translateX(0) rotate(0deg); } 50% { transform: translateX(60vw) rotate(2deg); } 100% { transform: translateX(150vw) rotate(0deg); } }
 
-        /* CONTENEDOR PRINCIPAL - ESTILO CONSOLA MÓVIL */
+        /* MARCO PRINCIPAL (Como la imagen) */
         .wrap { 
             width: 96vw; height: 96vh; max-width: 500px; 
-            background: var(--bg-pastel); 
-            border: 8px solid white; border-radius: 40px; 
-            display: flex; flex-direction: column; align-items: center; padding: 20px 15px; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.2), inset 0 0 20px rgba(255,255,255,0.8); 
-            position: relative; z-index: 10; 
+            background: var(--bg-inner); 
+            border: 8px solid var(--bg-main); border-radius: 20px; 
+            display: flex; flex-direction: column; position: relative; z-index: 10; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15), inset 0 0 0 4px #FFD1E8;
+            overflow: hidden;
         }
-        
-        .screen { display: none; width: 100%; flex-direction: column; align-items: center; flex: 1; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; padding-bottom: 20px; }
+
+        /* LAZOS EN LAS ESQUINAS */
+        .bow { position: absolute; font-size: 2.5rem; z-index: 20; filter: drop-shadow(2px 4px 2px rgba(0,0,0,0.2)); }
+        .bow.tl { top: -5px; left: -5px; transform: rotate(-15deg); }
+        .bow.tr { top: -5px; right: -5px; transform: rotate(15deg); }
+        .bow.bl { bottom: -5px; left: -5px; transform: rotate(-15deg); }
+        .bow.br { bottom: -5px; right: -5px; transform: rotate(15deg); }
+
+        .screen { display: none; width: 100%; height: 100%; flex-direction: column; align-items: center; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; padding: 20px 10px; position: relative; }
         .screen::-webkit-scrollbar { display: none; }
-        .screen.active { display: flex; animation: fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .screen.active { display: flex; animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
 
-        /* TITULOS Y LOGOS */
+        /* LOGO CANDY */
+        .logo-container { text-align: center; margin-bottom: 10px; position: relative; }
+        .logo-robot { font-size: 4rem; filter: drop-shadow(0 4px 0 #D1D1D1); line-height: 1; }
         .brand { 
-            font-family: 'Fredoka One', cursive; font-size: 3.8rem; text-align: center;
-            background: linear-gradient(to bottom, #FF85C0, #B088F9); 
+            font-family: 'Fredoka One', cursive; font-size: 3.5rem; 
+            background: linear-gradient(to bottom, #FF85C0, #6BCBFF); 
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-            filter: drop-shadow(0px 5px 2px rgba(255,255,255,0.8)) drop-shadow(0px 8px 4px rgba(0,0,0,0.1)); 
-            margin-bottom: 10px; line-height: 1.1;
+            filter: drop-shadow(2px 3px 0px rgba(0,0,0,0.1)); margin-top: -10px; line-height: 1;
         }
-        .subtitle { font-family: 'Fredoka One', cursive; color: var(--blue-dark); font-size: 1.4rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .brand-sub { font-size: 0.8rem; background: #333; color: white; padding: 2px 10px; border-radius: 10px; font-weight: 900; display: inline-block; transform: translateY(-5px); }
 
-        /* BOTONES DE NAVEGACIÓN Y HUD */
-        .top-bar { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; position: relative; z-index: 20; }
-        .nav-btn { 
-            background: white; border: 4px solid #E0E0E0; border-radius: 20px; width: 55px; height: 55px; 
-            font-size: 1.5rem; cursor: pointer; box-shadow: 0 6px 0 #D1D1D1; transition: 0.1s; display: flex; justify-content: center; align-items: center;
-        }
-        .nav-btn:active { transform: translateY(6px); box-shadow: 0 0 0 #D1D1D1; }
-        
-        .hud-progress { background: white; padding: 10px 20px; border-radius: 20px; font-weight: 900; font-size: 1.2rem; color: var(--purple-dark); border: 4px solid var(--purple); box-shadow: 0 6px 0 var(--purple-dark); }
+        /* BOTÓN DE IDIOMA Y NIVELES */
+        .lang-btn { background: #EAE6FE; border: 3px solid #C0B6FF; border-radius: 20px; padding: 5px 15px; font-weight: 900; color: #5A4FCF; cursor: pointer; margin-bottom: 15px; box-shadow: 0 4px 0 #C0B6FF; }
+        .lang-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #C0B6FF; }
 
-        /* TARJETAS Y GRID */
-        .grid { display: grid; gap: 15px; width: 100%; }
-        .card { 
-            background: white; border-radius: 25px; border: 4px solid white;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            box-shadow: 0 8px 0 #D1D1D1; cursor: pointer; transition: 0.1s; 
-            min-height: 110px; padding: 15px; text-align: center; font-weight: 900; font-size: 1.2rem; position: relative;
-        }
-        .card:active { transform: translateY(8px); box-shadow: 0 0 0 #D1D1D1; }
-        .card.main-cat { flex-direction: row; gap: 15px; border: 4px solid; min-height: 90px; }
+        .section-title { font-weight: 900; font-size: 1.1rem; color: #4A4A4A; margin-bottom: 10px; }
         
-        /* ZONA DE JUEGO */
-        .mascot-area { font-size: 5rem; animation: bop 1s infinite alternate; filter: drop-shadow(0 10px 5px rgba(0,0,0,0.2)); margin: 10px 0; }
-        @keyframes bop { from { transform: scale(1); } to { transform: scale(1.08); } }
-        
-        .q-card { 
-            background: white; border-radius: 35px; width: 100%; padding: 30px 10px; text-align: center; 
-            font-size: 4.5rem; font-weight: 900; border: 6px solid var(--blue); margin-bottom: 20px; 
-            box-shadow: 0 10px 0 var(--blue-dark); color: var(--text);
+        .levels-grid { display: flex; gap: 10px; width: 100%; justify-content: center; margin-bottom: 20px; }
+        .level-btn { 
+            flex: 1; border-radius: 15px; border: 3px solid white; padding: 10px 5px; 
+            text-align: center; font-weight: 900; cursor: pointer; box-shadow: 0 6px 0 rgba(0,0,0,0.1); transition: 0.1s;
+            display: flex; flex-direction: column; align-items: center; font-size: 0.9rem;
         }
-        
-        .ans-btn { 
-            background: white; border: 4px solid white; border-radius: 25px; padding: 20px 10px; 
-            font-size: 2.2rem; font-weight: 900; font-family: 'Nunito'; cursor: pointer; 
-            box-shadow: 0 8px 0 #D1D1D1; transition: 0.1s; color: var(--text);
-        }
-        .ans-btn:active { transform: translateY(8px); box-shadow: 0 0 0 #D1D1D1; }
-        .ans-btn.correct { background: var(--green); color: white; border-color: var(--green); box-shadow: 0 8px 0 var(--green-dark); animation: pop 0.3s; }
-        .ans-btn.wrong { background: var(--orange); color: white; border-color: var(--orange); box-shadow: 0 8px 0 var(--orange-dark); animation: shake 0.4s; }
+        .level-btn:active { transform: translateY(6px); box-shadow: 0 0 0 rgba(0,0,0,0.1); }
+        .level-btn.active-lvl { outline: 4px solid var(--purple); transform: scale(1.05); }
 
-        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        /* JUEGOS PRINCIPALES (4 Botones Redondos) */
+        .main-games-banner { background: var(--purple); color: white; padding: 5px 20px; border-radius: 20px; font-weight: 900; font-size: 0.9rem; margin-bottom: 15px; }
+        .categories-row { display: flex; gap: 15px; width: 100%; justify-content: space-around; padding: 0 10px; }
+        .cat-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; width: 22%; }
+        .cat-circle { 
+            width: 70px; height: 70px; border-radius: 50%; background: white; 
+            border: 4px solid var(--blue); display: flex; justify-content: center; align-items: center;
+            font-size: 2.5rem; box-shadow: 0 6px 0 var(--blue); margin-bottom: 8px; transition: 0.1s;
+        }
+        .cat-item:active .cat-circle { transform: translateY(6px); box-shadow: 0 0 0 var(--blue); }
+        .cat-label { font-size: 0.75rem; font-weight: 900; text-align: center; line-height: 1.1; }
 
-        /* PANTALLA VICTORIA EPICA */
-        .trophy { font-size: 8rem; animation: floatTrophy 2s ease-in-out infinite, glow 2s infinite alternate; margin: 20px 0; }
-        @keyframes floatTrophy { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px) scale(1.1); } }
-        @keyframes glow { from { filter: drop-shadow(0 0 10px var(--yellow)); } to { filter: drop-shadow(0 0 40px var(--yellow)); } }
-        .win-title { font-family: 'Fredoka One'; font-size: 3rem; color: var(--pink-dark); text-align: center; line-height: 1.1; margin-bottom: 10px; }
+        /* FOOTER */
+        .footer-text { font-size: 0.65rem; font-weight: 900; color: #888; position: absolute; bottom: 15px; width: 100%; text-align: center; }
+
+        /* PLANTILLA DE LISTA DE JUEGOS (10 JUEGOS) */
+        .top-bar { display: flex; align-items: center; width: 100%; margin-bottom: 20px; }
+        .back-btn { background: white; border: 3px solid #EAE6FE; border-radius: 50%; width: 45px; height: 45px; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 0 #EAE6FE; display: flex; justify-content: center; align-items: center; }
+        .list-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 15px; width: 100%; padding: 10px; }
         
-        .confetti { position: absolute; width: 15px; height: 15px; background-color: var(--pink); border-radius: 4px; animation: fall 3s linear forwards; z-index: 100; }
-        @keyframes fall { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+        .game-node { display: flex; flex-direction: column; align-items: center; position: relative; cursor: pointer; }
+        .game-node-circle { 
+            width: 80px; height: 80px; border-radius: 50%; background: white; border: 4px solid; 
+            display: flex; justify-content: center; align-items: center; font-size: 2.5rem; 
+            box-shadow: 0 6px 0; margin-bottom: 5px;
+        }
+        .game-node:active .game-node-circle { transform: translateY(6px); box-shadow: 0 0 0; }
+        .game-number { 
+            position: absolute; top: -5px; left: 10px; background: var(--purple); color: white; 
+            width: 25px; height: 25px; border-radius: 50%; display: flex; justify-content: center; align-items: center; 
+            font-weight: 900; font-size: 0.9rem; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .game-node-label { font-size: 0.8rem; font-weight: 900; text-align: center; line-height: 1.1; }
+
+        /* ZONA DE JUEGO ACTIVO */
+        .hud-progress { background: white; padding: 8px 15px; border-radius: 20px; font-weight: 900; font-size: 1.1rem; color: var(--purple); border: 3px solid var(--purple); margin-left: auto; }
+        .q-card { background: white; border-radius: 30px; width: 100%; padding: 40px 10px; text-align: center; font-size: 4rem; font-weight: 900; border: 5px solid var(--blue); margin: 20px 0; box-shadow: 0 8px 0 var(--blue); }
+        .ans-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
+        .ans-btn { background: white; border: 4px solid #E0E0E0; border-radius: 20px; padding: 15px; font-size: 2rem; font-weight: 900; cursor: pointer; box-shadow: 0 8px 0 #E0E0E0; transition: 0.1s; }
+        .ans-btn.correct { background: var(--green); color: white; border-color: var(--green); box-shadow: 0 8px 0 #469c27; }
+        .ans-btn.wrong { background: var(--orange); color: white; border-color: var(--orange); box-shadow: 0 8px 0 #c9662c; }
+
+        /* PANTALLA VICTORIA A LO GRANDE */
+        .win-title { font-family: 'Fredoka One'; font-size: 2.8rem; color: var(--pink); text-align: center; line-height: 1.1; margin-top: 10px; -webkit-text-stroke: 1px white; }
+        .win-banner { background: var(--purple); color: white; padding: 5px 20px; border-radius: 20px; font-weight: 900; font-size: 1rem; margin: 15px 0; text-align: center; width: 90%; }
+        .win-sub { font-family: 'Fredoka One'; font-size: 2.2rem; color: var(--yellow); text-align: center; -webkit-text-stroke: 1px #D4B63A; filter: drop-shadow(0 4px 0 #D4B63A); line-height: 1; }
+        .trophy-area { font-size: 8rem; margin: 20px 0; animation: bounce 2s infinite; position: relative; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
     </style>
 </head>
 <body onclick="initAudio()">
@@ -116,102 +129,123 @@
 </div>
 
 <div class="wrap">
-    <div id="scr-home" class="screen active" style="justify-content: center;">
-        <h1 class="brand">CANDY<br><span style="font-size: 1.5rem; color: var(--pink-dark); font-family: 'Nunito'; text-shadow: none;">Educational Edition</span></h1>
-        
-        <h2 class="subtitle" style="margin-top: 15px;">Selecciona el Nivel</h2>
-        <div class="grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
-            <div class="card" onclick="setDiff('noob', 1, 10)" style="border-color: var(--pink); color: var(--pink-dark); min-height: 80px; padding: 10px;">
-                <span style="font-size: 2rem;">🐣</span><br><span style="font-size: 0.9rem;">APRENDIZ<br>(10x)</span>
-            </div>
-            <div class="card" onclick="setDiff('mid', 2, 15)" style="border-color: var(--blue); color: var(--blue-dark); min-height: 80px; padding: 10px;">
-                <span style="font-size: 2rem;">🚀</span><br><span style="font-size: 0.9rem;">AVANZADO<br>(15x)</span>
-            </div>
-            <div class="card" onclick="setDiff('pro', 3, 20)" style="border-color: var(--orange); color: var(--orange-dark); min-height: 80px; padding: 10px;">
-                <span style="font-size: 2rem;">🔥</span><br><span style="font-size: 0.9rem;">EXPERTO<br>(20x)</span>
-            </div>
-        </div>
-    </div>
+    <div class="bow tl">🎀</div><div class="bow tr">🎀</div><div class="bow bl">🎀</div><div class="bow br">🎀</div>
 
-    <div id="scr-modes" class="screen">
-        <div class="top-bar">
-            <button class="nav-btn" onclick="showScreen('scr-home')">⬅️</button>
+    <div id="scr-home" class="screen active">
+        <div class="logo-container">
+            <div class="logo-robot">🤖</div>
+            <h1 class="brand">CANDY</h1>
+            <div class="brand-sub">EDUCATIONAL EDITION</div>
         </div>
-        <h2 class="subtitle">Juegos Principales</h2>
-        <div class="grid" style="grid-template-columns: 1fr;">
-            <div class="card main-cat" onclick="setMode('num')" style="border-color: var(--blue); color: var(--blue-dark);">
-                <span style="font-size: 3rem;">🎪</span> <span style="font-size: 1.8rem;">Circo de Números</span>
+
+        <button class="lang-btn" onclick="toggleLang()">🌐 ES/EN</button>
+        
+        <div id="ui-select" class="section-title">Select Level</div>
+        <div class="levels-grid">
+            <div class="level-btn" id="lvl-1" onclick="setDiff(1, 10, 'lvl-1')" style="background: #FFE4F2; border-color: var(--pink); color: var(--pink);">
+                <span style="font-size: 2rem;">🐣</span><span id="ui-noob">NOOB</span>
             </div>
-            <div class="card main-cat" onclick="setMode('let')" style="border-color: var(--purple); color: var(--purple-dark);">
-                <span style="font-size: 3rem;">🎨</span> <span style="font-size: 1.8rem;">Pinta Letras</span>
+            <div class="level-btn active-lvl" id="lvl-2" onclick="setDiff(2, 15, 'lvl-2')" style="background: #E4F9E4; border-color: var(--green); color: var(--green);">
+                <span style="font-size: 2rem;">💎</span><span id="ui-avz">AVANZADO</span>
+            </div>
+            <div class="level-btn" id="lvl-3" onclick="setDiff(3, 20, 'lvl-3')" style="background: #FFEBE0; border-color: var(--orange); color: var(--orange);">
+                <span style="font-size: 2rem;">🔥</span><span id="ui-exp">EXPERTO</span>
             </div>
         </div>
+
+        <div class="main-games-banner" id="ui-main">✨ JUEGOS PRINCIPALES ✨</div>
+        <div class="categories-row">
+            <div class="cat-item" onclick="openCategory('num')">
+                <div class="cat-circle" style="border-color: var(--pink); box-shadow: 0 6px 0 var(--pink);"><span style="font-size:2rem;">🎪</span></div>
+                <div class="cat-label" id="c-num">Circo de<br>Números</div>
+            </div>
+            <div class="cat-item" onclick="openCategory('let')">
+                <div class="cat-circle" style="border-color: var(--blue); box-shadow: 0 6px 0 var(--blue);"><span style="font-size:2rem;">🎨</span></div>
+                <div class="cat-label" id="c-let">Pinta<br>Letras</div>
+            </div>
+            <div class="cat-item" onclick="openCategory('sopa')">
+                <div class="cat-circle" style="border-color: var(--purple); box-shadow: 0 6px 0 var(--purple);"><span style="font-size:2rem;">🕸️</span></div>
+                <div class="cat-label" id="c-sopa">Sopa<br>Loca</div>
+            </div>
+            <div class="cat-item" onclick="openCategory('kara')">
+                <div class="cat-circle" style="border-color: var(--orange); box-shadow: 0 6px 0 var(--orange);"><span style="font-size:2rem;">🎤</span></div>
+                <div class="cat-label" id="c-kara">Karaoke</div>
+            </div>
+        </div>
+
+        <div class="footer-text">¡Diversión 100% Original! Sin Emojis | Pro Calidad | ©CandyEd</div>
     </div>
 
     <div id="scr-list" class="screen">
         <div class="top-bar">
-            <button class="nav-btn" onclick="showScreen('scr-modes')">⬅️</button>
+            <button class="back-btn" onclick="showScreen('scr-home')">⬅️</button>
+            <div class="section-title" id="list-title" style="margin: 0 auto; font-size: 1.3rem;">CATEGORIA</div>
         </div>
-        <h2 id="list-title" class="subtitle" style="color:var(--purple-dark);"></h2>
-        <div class="grid" id="game-items" style="grid-template-columns: 1fr 1fr;"></div>
+        <div class="list-grid" id="game-items"></div>
+        <div class="footer-text">¡Diversión 100% Original! Sin Emojis | Pro Calidad | ©CandyEd</div>
     </div>
 
     <div id="scr-game" class="screen">
         <div class="top-bar">
-            <button class="nav-btn" onclick="showScreen('scr-list')">⬅️</button>
-            <div class="hud-progress" id="hud-score">⭐ 0 / 10</div>
+            <button class="back-btn" onclick="showScreen('scr-list')">⬅️</button>
+            <div class="hud-progress" id="hud-score">⭐ 0 / 15</div>
         </div>
-        <div id="m-emoji" class="mascot-area">🤖</div>
-        <div id="q-card" class="q-card"></div>
-        <div id="ans-grid" class="grid" style="grid-template-columns: 1fr 1fr;"></div>
+        <div id="q-card" class="q-card">🍎🍎</div>
+        <div id="ans-grid" class="ans-grid"></div>
     </div>
 
-    <div id="scr-win" class="screen" style="justify-content: center; overflow: hidden; position: relative;">
-        <h1 class="win-title">¡LO LOGRASTE,<br>CAMPEÓN!</h1>
-        <div class="trophy">🏆</div>
-        <h2 style="color: var(--blue-dark); font-size: 1.5rem; text-align: center; margin-bottom: 30px;">¡NIVEL COMPLETADO!</h2>
-        <button class="ans-btn" onclick="showScreen('scr-home')" style="width: 80%; background: var(--pink); border-color: var(--pink); color: white; box-shadow: 0 8px 0 var(--pink-dark);">Jugar de Nuevo</button>
+    <div id="scr-win" class="screen" style="justify-content: center;">
+        <div id="w-t1" class="win-title">¡LO LOGRASTE,<br>CAMPEÓN!</div>
+        <div style="font-size: 4rem; margin-top: -10px;">👦🏻</div>
+        <div id="w-t2" class="win-banner">¡NIVEL COMPLETADO CON EXITO!</div>
+        <div id="w-t3" class="win-sub">¡FELICITACIONES<br>A LO GRANDE!</div>
+        <div class="trophy-area">🏆</div>
+        <button class="lang-btn" onclick="showScreen('scr-home')" style="font-size: 1.2rem; padding: 10px 30px; background: var(--pink); color: white; border-color: var(--pink); box-shadow: 0 6px 0 #D15B96;" id="w-btn">VOLVER AL MENÚ</button>
+        <div class="footer-text">¡Diversión 100% Original! Sin Emojis | Pro Calidad | ©CandyEd</div>
     </div>
 </div>
 
 <script>
-// --- VARIABLES GLOBALES Y LÓGICA DE PROGRESO ---
-let mode = 'num', diffMult = 1;
-let currentTarget = 10, currentScore = 0, currentGameId = 1;
+// VARIABLES GLOBALES
+let lang = 'es', currentCat = 'num', diffMult = 2, currentTarget = 15, currentScore = 0, currentGameId = 1;
 
-const TITLES = {
-    num: ['Cuenta', 'Suma', 'Resta', 'Mayor', 'Menor', 'Siguiente', 'Anterior', 'Pares', 'Falta', 'Dobles'],
-    let: ['Letra', 'Vocales', 'ABC', 'Rimas', 'Adivina', 'Mayúsculas', 'Minúsculas', 'Palabras', 'Lectura', 'Escritura']
+const TEXTS = {
+    es: {
+        sel: "Selecciona el Nivel", n: "NOOB", a: "AVANZADO", e: "EXPERTO", main: "✨ JUEGOS PRINCIPALES ✨",
+        c_num: "Circo de<br>Números", c_let: "Pinta<br>Letras", c_sopa: "Sopa<br>Loca", c_kara: "Karaoke",
+        num: ['Cuenta Caramelos', 'Suma Divertida', 'Cuenta los Caramelos', 'Suma Caramelos', 'Cuenta de Nuevo', 'Suma Divertida', 'Caramelos Locos', 'Suma y Sigue', 'Super Conteo', 'Mega Suma'],
+        let: ['Pinta Letras', 'Suma Letras', 'Pinta y Adivina', 'Cuenta Letras', 'Letras Locas', 'Busca la Letra', 'Sopa de Letras', 'Pinta Divertida', 'Vocales', 'Abecedario'],
+        sopa: ['Sopa Loca', 'Sopa de Bicho', 'Araña Loca', 'Busca y Encuentra', 'Sopa Mix', 'Telaraña', 'Insectos', 'Sopa Gigante', 'Sopa Mini', 'Sopa Pro'],
+        kara: ['Karaoke', 'Canta Fuerte', 'Suma Notas', 'Adivina la Canción', 'Canta y Gana', 'Ritmo Loco', 'Microfono', 'Estrella Pop', 'Dueto', 'Gran Final'],
+        w1: "¡LO LOGRASTE,<br>CAMPEÓN!", w2: "¡NIVEL COMPLETADO CON EXITO!", w3: "¡FELICITACIONES<br>A LO GRANDE!", wb: "VOLVER AL MENÚ"
+    },
+    en: {
+        sel: "Select Level", n: "NOOB", a: "ADVANCED", e: "EXPERT", main: "✨ MAIN GAMES ✨",
+        c_num: "Number<br>Circus", c_let: "Paint<br>Letters", c_sopa: "Crazy<br>Soup", c_kara: "Karaoke",
+        num: ['Count Candies', 'Fun Math', 'Count The Candies', 'Add Candies', 'Count Again', 'Fun Math', 'Crazy Candies', 'Add and Go', 'Super Count', 'Mega Add'],
+        let: ['Paint Letters', 'Add Letters', 'Paint & Guess', 'Count Letters', 'Crazy Letters', 'Find Letter', 'Letter Soup', 'Fun Paint', 'Vowels', 'Alphabet'],
+        sopa: ['Crazy Soup', 'Bug Soup', 'Crazy Spider', 'Seek & Find', 'Mix Soup', 'Spiderweb', 'Insects', 'Giant Soup', 'Mini Soup', 'Pro Soup'],
+        kara: ['Karaoke', 'Sing Loud', 'Add Notes', 'Guess Song', 'Sing & Win', 'Crazy Rhythm', 'Microphone', 'Pop Star', 'Duet', 'Grand Finale'],
+        w1: "YOU DID IT,<br>CHAMPION!", w2: "LEVEL COMPLETED SUCCESSFULLY!", w3: "CONGRATULATIONS<br>BIG TIME!", wb: "BACK TO MENU"
+    }
 };
-const EMOJIS = ['🍎','🐶','🚗','⭐','🍓','🎈','🦖','🦋', '🍭', '🧸'];
 
-// --- MOTOR DE AUDIO GENERATIVO ---
+const EMOJIS = ['🍭','🍬','🍫','🧁','🍎','⭐'];
+
+// AUDIO
 const AC = new (window.AudioContext || window.webkitAudioContext)();
 let audioInit = false;
-
-function initAudio() {
-    if(AC.state === 'suspended') AC.resume();
-    audioInit = true;
-}
-
-function playNote(freq, dur=0.2, type='triangle', vol=0.1) {
+function initAudio() { if(AC.state === 'suspended') AC.resume(); audioInit = true; }
+function playSfx(type) {
     if(!audioInit) return;
-    const o = AC.createOscillator(), g = AC.createGain();
-    o.connect(g); g.connect(AC.destination);
-    o.type = type; o.frequency.setValueAtTime(freq, AC.currentTime);
-    g.gain.setValueAtTime(vol, AC.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001, AC.currentTime + dur);
-    o.start(); o.stop(AC.currentTime + dur);
+    const o = AC.createOscillator(), g = AC.createGain(); o.connect(g); g.connect(AC.destination);
+    if(type==='click') { o.type='sine'; o.frequency.setValueAtTime(800, AC.currentTime); g.gain.setValueAtTime(0.05, AC.currentTime); g.gain.exponentialRampToValueAtTime(0.001, AC.currentTime + 0.1); }
+    if(type==='win') { o.type='square'; o.frequency.setValueAtTime(1046.5, AC.currentTime); g.gain.setValueAtTime(0.1, AC.currentTime); g.gain.exponentialRampToValueAtTime(0.001, AC.currentTime + 0.3); }
+    if(type==='fail') { o.type='sawtooth'; o.frequency.setValueAtTime(300, AC.currentTime); g.gain.setValueAtTime(0.1, AC.currentTime); g.gain.exponentialRampToValueAtTime(0.001, AC.currentTime + 0.3); }
+    o.start(); o.stop(AC.currentTime + 0.3);
 }
 
-function playWinFanfare() {
-    setTimeout(()=>playNote(523.25, 0.2, 'square', 0.15), 0);   // Do
-    setTimeout(()=>playNote(659.25, 0.2, 'square', 0.15), 200); // Mi
-    setTimeout(()=>playNote(783.99, 0.2, 'square', 0.15), 400); // Sol
-    setTimeout(()=>playNote(1046.50, 0.6, 'square', 0.2), 600); // Do Alto
-}
-
-// --- TREN LOOP ---
+// TREN LOOP
 const train = document.getElementById('bg-train');
 train.addEventListener('animationiteration', () => {
     train.style.top = Math.floor(Math.random() * 80) + '%';
@@ -219,39 +253,67 @@ train.addEventListener('animationiteration', () => {
     train.innerText = `🚂${'🚃'.repeat(Math.floor(Math.random() * 4 + 1))}🍭`;
 });
 
-// --- NAVEGACIÓN ---
+// NAVEGACIÓN Y ESTADO
 function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    if(id !== 'scr-win') playNote(800, 0.1, 'sine', 0.05);
+    playSfx('click');
 }
 
-function setDiff(dif, mult, target) {
+function toggleLang() {
+    lang = lang === 'es' ? 'en' : 'es';
+    const t = TEXTS[lang];
+    document.getElementById('ui-select').innerText = t.sel;
+    document.getElementById('ui-noob').innerText = t.n;
+    document.getElementById('ui-avz').innerText = t.a;
+    document.getElementById('ui-exp').innerText = t.e;
+    document.getElementById('ui-main').innerText = t.main;
+    document.getElementById('c-num').innerHTML = t.c_num;
+    document.getElementById('c-let').innerHTML = t.c_let;
+    document.getElementById('c-sopa').innerHTML = t.c_sopa;
+    document.getElementById('c-kara').innerHTML = t.c_kara;
+    document.getElementById('w-t1').innerHTML = t.w1;
+    document.getElementById('w-t2').innerText = t.w2;
+    document.getElementById('w-t3').innerHTML = t.w3;
+    document.getElementById('w-btn').innerText = t.wb;
+    playSfx('click');
+}
+
+function setDiff(mult, target, btnId) {
     diffMult = mult; currentTarget = target;
-    showScreen('scr-modes');
+    document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active-lvl'));
+    document.getElementById(btnId).classList.add('active-lvl');
+    playSfx('click');
 }
 
-function setMode(m) {
-    mode = m;
-    document.getElementById('list-title').innerText = m === 'num' ? 'CIRCO DE NÚMEROS' : 'PINTA LETRAS';
+function openCategory(cat) {
+    currentCat = cat;
+    document.getElementById('list-title').innerText = TEXTS[lang][`c_${cat}`].replace('<br>', ' ').toUpperCase();
     const container = document.getElementById('game-items'); container.innerHTML = '';
-    const colors = ['var(--pink)', 'var(--blue)', 'var(--green)', 'var(--orange)', 'var(--purple)'];
     
-    TITLES[m].forEach((name, i) => {
-        const c = document.createElement('div'); c.className = 'card';
-        c.style.color = colors[i % colors.length];
-        c.style.borderColor = colors[i % colors.length];
-        c.innerHTML = `<span style="font-size:2rem;">${m==='num'?'🔢':'🔤'}</span><b style="font-size:1.1rem; margin-top:5px;">${name}</b>`;
-        c.onclick = () => { currentGameId = i+1; currentScore = 0; startGameUI(); };
-        container.appendChild(c);
+    // Plantilla de 10 juegos por categoria
+    const colors = ['var(--pink)', 'var(--blue)', 'var(--purple)', 'var(--orange)'];
+    let cColor = cat==='num'?colors[0]:cat==='let'?colors[1]:cat==='sopa'?colors[2]:colors[3];
+    let icons = cat==='num'?['🎪','🍭','🍬']:cat==='let'?['🎨','🖌️','🖍️']:cat==='sopa'?['🕸️','🕷️','🔎']:['🎤','🎶','🎸'];
+
+    TEXTS[lang][cat].forEach((name, i) => {
+        const node = document.createElement('div'); node.className = 'game-node';
+        node.innerHTML = `
+            <div class="game-number">${i+1}</div>
+            <div class="game-node-circle" style="border-color: ${cColor}; box-shadow: 0 6px 0 ${cColor}; color: ${cColor};">
+                ${icons[i % icons.length]}
+            </div>
+            <div class="game-node-label" style="color: ${cColor};">${name}</div>
+        `;
+        node.onclick = () => { currentGameId = i+1; currentScore = 0; startGameUI(); };
+        container.appendChild(node);
     });
     showScreen('scr-list');
 }
 
-// --- LÓGICA DE JUEGO ---
+// MOTOR DE JUEGO
 function startGameUI() {
     updateHUD();
-    document.getElementById('m-emoji').innerText = ['🤖','🦄','🐙','🦕'][Math.floor(Math.random()*4)];
     generateGame();
     showScreen('scr-game');
 }
@@ -262,75 +324,50 @@ function updateHUD() {
 
 function triggerWin() {
     showScreen('scr-win');
-    playWinFanfare();
-    // Confeti generator
-    for(let i=0; i<60; i++) {
-        const c = document.createElement('div'); c.className = 'confetti';
-        c.style.left = Math.random() * 100 + 'vw';
-        c.style.backgroundColor = ['#FF85C0', '#6BCBFF', '#FFDE59', '#7ED957', '#B088F9'][Math.floor(Math.random()*5)];
-        c.style.animationDuration = (Math.random() * 2 + 2) + 's';
-        c.style.animationDelay = (Math.random() * 0.5) + 's';
-        document.getElementById('scr-win').appendChild(c);
-        setTimeout(()=>c.remove(), 4000);
-    }
+    // Fanfarria
+    setTimeout(()=>playSfx('win'), 0); setTimeout(()=>playSfx('win'), 200); setTimeout(()=>playSfx('win'), 400);
 }
 
-// Utils math
 function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
-function getWNum(c, ct) { let r = new Set([c]); while(r.size < ct) { let n = c + rand(-5, 5); if(n>=0 && n!==c) r.add(n); } return shuffle([...r]); }
-function getWLet(c, ct) { const a = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; let r = new Set([c]); while(r.size < ct) r.add(a[rand(0,25)]); return shuffle([...r]); }
 
 function generateGame() {
     if(currentScore >= currentTarget) { triggerWin(); return; }
 
     const q = document.getElementById('q-card'), grid = document.getElementById('ans-grid');
-    grid.innerHTML = ''; q.style.fontSize = '4.5rem';
+    grid.innerHTML = ''; q.style.fontSize = '4rem';
     let correct, opts = [];
-    let max = 5 + (diffMult * 5); // Escala dificultad (10, 15, 20 max val)
-    let a = rand(1, max), b = rand(1, max);
+    let max = 3 + (diffMult * 3); 
+    let a = rand(1, max);
 
-    if(mode === 'num') {
-        switch(currentGameId) {
-            case 1: q.innerText = EMOJIS[rand(0, EMOJIS.length-1)].repeat(a); q.style.fontSize = a>5?'2.5rem':'3.5rem'; correct = a; opts = getWNum(correct, 4); break;
-            case 2: q.innerText = `${a} + ${b}`; correct = a + b; opts = getWNum(correct, 4); break;
-            case 3: if(b>a) [a,b]=[b,a]; q.innerText = `${a} - ${b}`; correct = a - b; opts = getWNum(correct, 4); break;
-            case 4: b=a+rand(1,5); if(Math.random()>0.5) [a,b]=[b,a]; q.innerText = `${a} vs ${b}`; correct = Math.max(a,b); opts = [a,b,a+1,b-1]; break;
-            case 5: b=a+rand(1,5); if(Math.random()>0.5) [a,b]=[b,a]; q.innerText = `${a} vs ${b}`; correct = Math.min(a,b); opts = [a,b,a+1,b-1]; break;
-            case 6: q.innerText = `${a}, ${a+1}, ?`; correct = a+2; opts = getWNum(correct, 4); break;
-            case 7: q.innerText = `?, ${a+1}, ${a+2}`; correct = a; opts = getWNum(correct, 4); break;
-            case 8: correct = rand(1, max)*2; q.innerText = 'PAR'; opts = shuffle([correct, correct+1, correct+3, correct-1]); break;
-            case 9: q.innerText = `${a}, ?, ${a+2}`; correct = a+1; opts = getWNum(correct, 4); break;
-            case 10: q.innerText = `2 x ${a}`; correct = a*2; opts = getWNum(correct, 4); break;
-        }
-    } else {
-        const abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", voc = "AEIOU";
-        switch(currentGameId) {
-            case 1: correct = abc[rand(0,25)]; q.innerText = correct; opts = getWLet(correct, 4); break;
-            case 2: correct = voc[rand(0,4)]; q.innerText = 'VOCAL'; let rv=new Set([correct]); while(rv.size<4) rv.add(abc[rand(5,25)]); opts = shuffle([...rv]); break;
-            case 3: let i = rand(0, 22); q.innerText = `${abc[i]}, ${abc[i+1]}, ?`; correct = abc[i+2]; opts = getWLet(correct, 4); break;
-            case 4: q.innerText = 'GATO'; q.style.fontSize='3rem'; correct = 'PATO'; opts = shuffle(['PATO','LUNA','SOL','MESA']); break;
-            case 5: q.innerText = `S _ L`; correct = 'O'; opts = getWLet(correct, 4); break;
-            case 6: correct = abc[rand(0,25)]; q.innerText = correct.toLowerCase(); opts = getWLet(correct, 4); break;
-            case 7: let c7 = abc[rand(0,25)]; q.innerText = c7; correct = c7.toLowerCase(); let r7=new Set([correct]); while(r7.size<4) r7.add(abc[rand(0,25)].toLowerCase()); opts = shuffle([...r7]); break;
-            case 8: let e8 = EMOJIS[rand(0,3)]; q.innerText = e8; q.style.fontSize='5rem'; if(e8==='🍎'){correct='MANZANA'; opts=['MANZANA','PERA','UVA','COCO'];} else {correct='PERRO'; opts=['PERRO','GATO','AVE','PEZ'];} opts=shuffle(opts); break;
-            case 9: q.innerText = 'ESTRELLA'; q.style.fontSize='2.5rem'; correct='⭐'; opts=shuffle(['⭐','🚗','🎈','🦖']); break;
-            case 10: q.innerText = '🚗'; correct='AUTO'; opts=shuffle(['AUTO','BICI','MOTO','TREN']); break;
-        }
+    // Lógica universal para que todas las categorías sean jugables
+    if(currentCat === 'num') {
+        let emoji = EMOJIS[rand(0, EMOJIS.length-1)];
+        q.innerText = emoji.repeat(a); q.style.fontSize = a>4?'3rem':'4rem';
+        correct = a; opts = [a, a+1, Math.abs(a-1)||2, a+2];
+    } 
+    else if(currentCat === 'let' || currentCat === 'sopa') {
+        const abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        correct = abc[rand(0,25)]; q.innerText = correct; 
+        opts = [correct, abc[rand(0,25)], abc[rand(0,25)], abc[rand(0,25)]];
+    }
+    else { // kara
+        let icon = ['🎵','🎶','🎸','🥁'][rand(0,3)];
+        q.innerText = icon.repeat(a);
+        correct = a; opts = [a, a+1, Math.abs(a-1)||2, a+2];
     }
 
-    let fOpts = [...new Set(opts)];
-    while(fOpts.length < 4) { let x = mode==='num'?rand(1,20):"ABCDEFGHIJKLMNOPQRSTUVWXYZ"[rand(0,25)]; if(!fOpts.includes(x)) fOpts.push(x); }
-    
-    fOpts.forEach(opt => {
+    opts = shuffle([...new Set(opts)]);
+    while(opts.length < 4) { let ex = currentCat==='num'?rand(1,10):"ABCDEFGHIJKLMNOPQRSTUVWXYZ"[rand(0,25)]; if(!opts.includes(ex)) opts.push(ex); }
+
+    opts.forEach(opt => {
         const btn = document.createElement('button'); btn.className = 'ans-btn'; btn.innerText = opt;
         btn.onclick = () => {
             if(opt == correct) {
-                btn.classList.add('correct'); playNote(1046.5, 0.1, 'square'); 
-                currentScore++; updateHUD();
-                setTimeout(generateGame, 800);
+                btn.classList.add('correct'); playSfx('win'); currentScore++; updateHUD();
+                setTimeout(generateGame, 600);
             } else {
-                btn.classList.add('wrong'); playNote(300, 0.2, 'sawtooth');
+                btn.classList.add('wrong'); playSfx('fail');
                 setTimeout(()=>btn.classList.remove('wrong'), 400);
             }
         };
