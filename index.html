@@ -6,7 +6,7 @@
     <title>CandyEd - Aprendizaje Divertido</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --pink: #FF8EBC; --blue: #7DD3FC; --green: #4ADE80; --orange: #FB923C; --text: #475569; }
+        :root { --pink: #FF8EBC; --blue: #7DD3FC; --green: #4ADE80; --orange: #FB923C; --yellow: #FFD93D; --text: #475569; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Fredoka', sans-serif; background: #FDF2F8; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
         #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: linear-gradient(135deg, #FDF2F8 0%, #E0F2FE 100%); }
@@ -17,13 +17,12 @@
             padding: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.05); position: relative;
         }
         
-        .screen { display: none; flex-direction: column; align-items: center; width: 100%; animation: fadeIn 0.4s ease-out; }
+        .screen { display: none; flex-direction: column; align-items: center; width: 100%; animation: fadeIn 0.4s ease-out; height: 100%; }
         .active { display: flex; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-        .brand-name { font-size: 3.5rem; background: linear-gradient(45deg, #FF6FB5, #4FA8E8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 10px 0 0; }
-        .slogan { font-size: 1.1rem; color: #64748b; font-weight: 700; margin-bottom: 20px; }
-
+        .brand-name { font-size: 3.5rem; background: linear-gradient(45deg, #FF6FB5, #4FA8E8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 10px 0; }
+        
         .grid-layout { display: grid; gap: 15px; width: 100%; max-width: 450px; margin-top: 10px; }
         .btn-card {
             background: white; border-radius: 30px; border: 4px solid white;
@@ -32,17 +31,62 @@
         }
         .btn-card:active { transform: translateY(6px); box-shadow: 0 4px 0 #E2E8F0; }
 
-        .btn-lang { padding: 20px; font-size: 1.5rem; color: var(--text); }
-        .btn-game { height: 140px; font-size: 1.2rem; }
+        /* JUEGO NOOB */
+        .game-area { flex-grow: 1; display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; width: 100%; }
+        .number-bubble {
+            width: 100px; height: 100px; background: white; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 3rem; color: var(--pink); border: 5px solid var(--pink);
+            box-shadow: 0 10px 0 #FFD1DC; cursor: pointer; transition: 0.2s;
+        }
+
+        /* --- MOTOR DE ANIMACIONES (CSS) --- */
         
-        /* Estilo para los botones de nivel con edades */
-        .btn-level { padding: 15px; height: 90px; flex-direction: row; justify-content: flex-start; padding-left: 30px; gap: 20px; }
-        .level-info { display: flex; flex-direction: column; align-items: flex-start; }
-        .age-label { font-size: 0.8rem; opacity: 0.8; margin-top: 2px; }
-        
-        .icon-lg { font-size: 3rem; }
-        .icon-md { font-size: 2.2rem; }
-        .back-btn { margin-top: 20px; color: var(--text); font-weight: 700; cursor: pointer; text-decoration: underline; font-size: 0.9rem; }
+        /* 10 CELEBRACIONES */
+        .anim-cel-1 { animation: cel-jump 0.5s ease; }
+        .anim-cel-2 { animation: cel-spin 0.5s linear; }
+        .anim-cel-3 { animation: cel-pulse 0.5s ease-out; }
+        .anim-cel-4 { animation: cel-wobble 0.5s ease-in-out; }
+        .anim-cel-5 { animation: cel-flip 0.5s ease; }
+        .anim-cel-6 { animation: cel-bounce-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .anim-cel-7 { animation: cel-shake 0.5s ease; }
+        .anim-cel-8 { animation: cel-zoom 0.5s ease; }
+        .anim-cel-9 { animation: cel-dance 0.5s infinite linear; } /* Un bailecito corto */
+        .anim-cel-10 { animation: cel-rainbow 0.5s linear; } /* Brillo de colores */
+
+        /* Keyframes Celebraciones */
+        @keyframes cel-jump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px) scale(1.1); } }
+        @keyframes cel-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes cel-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+        @keyframes cel-wobble { 0% { transform: translateX(0%); } 15% { transform: translateX(-25%) rotate(-5deg); } 30% { transform: translateX(20%) rotate(3deg); } 45% { transform: translateX(-15%) rotate(-3deg); } 60% { transform: translateX(10%) rotate(2deg); } 75% { transform: translateX(-5%) rotate(-1deg); } 100% { transform: translateX(0%); } }
+        @keyframes cel-flip { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+        @keyframes cel-bounce-in { 0% { opacity: 0; transform: scale(0.3); } 50% { opacity: 1; transform: scale(1.05); } 70% { transform: scale(0.9); } 100% { transform: scale(1); } }
+        @keyframes cel-shake { 0%, 100% { transform: translate(0, 0); } 10%, 30%, 50%, 70%, 90% { transform: translate(-10px, 0); } 20%, 40%, 60%, 80% { transform: translate(10px, 0); } }
+        @keyframes cel-zoom { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.7; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes cel-rainbow { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
+
+        /* 10 APOYOS (OOPS) - Suaves y graciosos */
+        .anim-oops-1 { animation: oops-wobble-s 0.5s ease; }
+        .anim-oops-2 { animation: oops-shrink 0.5s ease; }
+        .anim-oops-3 { animation: oops-lean 0.5s ease; }
+        .anim-oops-4 { animation: oops-blink 0.5s ease; }
+        .anim-oops-5 { animation: oops-head-shake 0.5s ease; }
+        .anim-oops-6 { animation: oops-slide 0.5s ease; }
+        .anim-oops-7 { animation: oops-float-Oops 0.5s ease; }
+        .anim-oops-8 { animation: oops-confused 0.5s ease; }
+        .anim-oops-9 { animation: oops-dizzy 0.5s ease; }
+        .anim-oops-10 { animation: oops-think 0.5s ease; }
+
+        /* Keyframes Apoyo */
+        @keyframes oops-wobble-s { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+        @keyframes oops-shrink { 0% { transform: scale(1); } 50% { transform: scale(0.8); } 100% { transform: scale(1); } }
+        @keyframes oops-lean { 0% { transform: rotate(0deg); } 50% { transform: rotate(-10deg); } 100% { transform: rotate(0deg); } }
+        @keyframes oops-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @keyframes oops-head-shake { 0% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } 100% { transform: translateX(0); } }
+        @keyframes oops-confused { 0% { transform: rotate(0deg); } 25% { transform: rotate(-5deg); } 75% { transform: rotate(5deg); } 100% { transform: rotate(0deg); } }
+
+        .character-svg { transition: 0.1s linear; }
+        .back-btn { margin-top: auto; color: var(--text); font-weight: 700; cursor: pointer; padding: 10px; }
     </style>
 </head>
 <body>
@@ -51,122 +95,140 @@
         
         <div id="screen-lang" class="screen active">
             <h1 class="brand-name">CandyEd</h1>
-            <p class="slogan">Elige tu idioma / Choose language</p>
             <div class="grid-layout">
-                <div class="btn-card btn-lang" onclick="setLang('es')">Español 🇪🇸</div>
-                <div class="btn-card btn-lang" onclick="setLang('en')">English 🇺🇸</div>
+                <div class="btn-card" style="padding:20px" onclick="setLang('es')">Español 🇪🇸</div>
+                <div class="btn-card" style="padding:20px" onclick="setLang('en')">English 🇺🇸</div>
             </div>
         </div>
 
         <div id="screen-main" class="screen">
             <h1 class="brand-name">CandyEd</h1>
-            <p id="main-slogan" class="slogan"></p>
             <div class="grid-layout" style="grid-template-columns: 1fr 1fr;">
-                <div class="btn-card btn-game" onclick="goToLevels()" style="color: var(--pink); border-bottom: 6px solid var(--pink);">
-                    <span class="icon-lg">🔢</span><span id="txt-num"></span>
+                <div class="btn-card" onclick="showScreen('screen-levels')" style="height:140px; color:var(--pink)">
+                    <span style="font-size:3rem">🔢</span> <span id="txt-num"></span>
                 </div>
-                <div class="btn-card btn-game" onclick="goToLevels()" style="color: var(--blue); border-bottom: 6px solid var(--blue);">
-                    <span class="icon-lg">ABC</span><span id="txt-let"></span>
+                <div class="btn-card" style="height:140px; color:var(--blue)">
+                    <span style="font-size:3rem">ABC</span> <span id="txt-let"></span>
                 </div>
             </div>
-            <div class="back-btn" onclick="showScreen('screen-lang')">← Cambiar Idioma</div>
         </div>
 
         <div id="screen-levels" class="screen">
             <h1 class="brand-name">CandyEd</h1>
-            <p id="level-title" class="slogan"></p>
             <div class="grid-layout">
-                <div class="btn-card btn-level" onclick="alert('Start!')" style="color: var(--blue); border-bottom: 6px solid var(--blue);">
-                    <span class="icon-md">🎯</span>
-                    <div class="level-info">
-                        <span id="label-n"></span>
-                        <span class="age-label" id="age-n"></span>
-                    </div>
-                </div>
-                <div class="btn-card btn-level" onclick="alert('Start!')" style="color: var(--green); border-bottom: 6px solid var(--green);">
-                    <span class="icon-md">💎</span>
-                    <div class="level-info">
-                        <span id="label-a"></span>
-                        <span class="age-label" id="age-a"></span>
-                    </div>
-                </div>
-                <div class="btn-card btn-level" onclick="alert('Start!')" style="color: var(--orange); border-bottom: 6px solid var(--orange);">
-                    <span class="icon-md">🔥</span>
-                    <div class="level-info">
-                        <span id="label-e"></span>
-                        <span class="age-label" id="age-e"></span>
-                    </div>
+                <div class="btn-card" onclick="startGame()" style="padding:15px; color:var(--blue); flex-direction:row; gap:20px; justify-content:start; padding-left:30px">
+                    <span style="font-size:2rem">🎯</span> <div><b id="label-n"></b><br><small id="age-n"></small></div>
                 </div>
             </div>
-            <div class="back-btn" onclick="showScreen('screen-main')">← Volver / Back</div>
+            <div class="back-btn" onclick="showScreen('screen-main')">← Volver</div>
         </div>
 
+        <div id="screen-game" class="screen">
+            <div id="char-container" class="character-svg">
+                <svg width="80" height="80" viewBox="0 0 100 100">
+                    <rect x="15" y="25" width="70" height="60" rx="20" fill="#FFD1DC" stroke="white" stroke-width="3"/>
+                    <circle cx="35" cy="55" r="4" fill="#444"/><circle cx="65" cy="55" r="4" fill="#444"/>
+                    <path id="char-mouth" d="M 42 72 Q 50 78 58 72" stroke="#444" stroke-width="3" fill="none" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h2 id="game-instr" style="color:var(--text); margin-bottom:20px">Toca el número 1</h2>
+            <div class="game-area" id="bubbles-container"></div>
+            <div class="back-btn" onclick="showScreen('screen-levels')">Salir</div>
+        </div>
     </div>
 
     <script>
         const translations = {
-            es: { 
-                slogan: "aprendizaje divertido", num: "NÚMEROS", let: "LETRAS", selLevel: "Elige tu nivel",
-                n: "PRINCIPIANTE", a: "AVANZADO", e: "EXPERTO", age: "años"
-            },
-            en: { 
-                slogan: "fun learning", num: "NUMBERS", let: "LETTERS", selLevel: "Choose your level",
-                n: "NOOB", a: "ADVANCED", e: "EXPERT", age: "yrs"
-            }
+            es: { num: "NÚMEROS", let: "LETRAS", n: "PRINCIPIANTE", age: "2-4 años", instr: "Toca el número", win: "¡GENIAL! 🎉" },
+            en: { num: "NUMBERS", let: "LETTERS", n: "NOOB", age: "2-4 yrs", instr: "Tap number", win: "GREAT! 🎉" }
         };
-
-        function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-        }
+        let currentLang = 'es';
+        let nextNumber = 1;
 
         function setLang(lang) {
-            const t = translations[lang];
-            document.getElementById('main-slogan').innerText = t.slogan;
-            document.getElementById('txt-num').innerText = t.num;
-            document.getElementById('txt-let').innerText = t.let;
-            document.getElementById('level-title').innerText = t.selLevel;
-            
-            // Set Levels and Ages
-            document.getElementById('label-n').innerText = t.n;
-            document.getElementById('age-n').innerText = `2-4 ${t.age}`;
-            document.getElementById('label-a').innerText = t.a;
-            document.getElementById('age-a').innerText = `5-7 ${t.age}`;
-            document.getElementById('label-e').innerText = t.e;
-            document.getElementById('age-e').innerText = `8-10 ${t.age}`;
-            
+            currentLang = lang;
+            document.getElementById('txt-num').innerText = translations[lang].num;
+            document.getElementById('txt-let').innerText = translations[lang].let;
+            document.getElementById('label-n').innerText = translations[lang].n;
+            document.getElementById('age-n').innerText = translations[lang].age;
             showScreen('screen-main');
         }
 
-        function goToLevels() { showScreen('screen-levels'); }
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
 
-        // --- Fondo Animado ---
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        function init() {
-            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            particles = [];
-            for(let i=0; i<15; i++) {
-                particles.push({
-                    x: Math.random()*canvas.width, y: Math.random()*canvas.height,
-                    vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3,
-                    size: Math.random()*20+10, color: `hsla(${Math.random()*360}, 70%, 90%, 0.3)`
-                });
+        function startGame() {
+            nextNumber = 1;
+            renderBubbles();
+            showScreen('screen-game');
+        }
+
+        function renderBubbles() {
+            const container = document.getElementById('bubbles-container');
+            container.innerHTML = '';
+            document.getElementById('game-instr').innerText = `${translations[currentLang].instr} ${nextNumber}`;
+            const nums = [1, 2, 3].sort(() => Math.random() - 0.5);
+            nums.forEach(n => {
+                const b = document.createElement('div');
+                b.className = 'number-bubble';
+                b.innerText = n;
+                b.onclick = () => checkNumber(n, b);
+                container.appendChild(b);
+            });
+        }
+
+        function checkNumber(n, element) {
+            const char = document.getElementById('char-container');
+            const mouth = document.getElementById('char-mouth');
+
+            // Limpiar animaciones previas
+            char.className = 'character-svg'; 
+
+            if(n === nextNumber) {
+                // --- CELEBRACIÓN ALEATORIA (1 de 10) ---
+                const randomCel = Math.floor(Math.random() * 10) + 1;
+                char.classList.add(`anim-cel-${randomCel}`);
+                
+                element.style.background = 'var(--green)';
+                mouth.setAttribute('d', 'M 40 75 Q 50 85 60 75'); // Sonrisa
+
+                setTimeout(() => {
+                    nextNumber++;
+                    if(nextNumber > 3) {
+                        alert(translations[currentLang].win);
+                        startGame();
+                    } else {
+                        renderBubbles();
+                        mouth.setAttribute('d', 'M 42 72 Q 50 78 58 72'); // Normal
+                    }
+                }, 600);
+            } else {
+                // --- APOYO ALEATORIO (1 de 10) ---
+                const randomOops = Math.floor(Math.random() * 10) + 1;
+                char.classList.add(`anim-oops-${randomOops}`);
+                
+                mouth.setAttribute('d', 'M 42 75 Q 50 75 58 75'); // Boca plana
+                
+                setTimeout(() => {
+                    mouth.setAttribute('d', 'M 42 72 Q 50 78 58 72'); // Normal
+                }, 500);
             }
         }
+
+        // Fondo (simplificado para rendimiento móvil)
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        function init() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         function draw() {
             ctx.clearRect(0,0,canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.x += p.vx; p.y += p.vy;
-                if(p.x<0 || p.x>canvas.width) p.vx *= -1;
-                if(p.y<0 || p.y>canvas.height) p.vy *= -1;
-                ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
-            });
-            requestAnimationFrame(draw);
+            ctx.fillStyle = 'hsla(330, 70%, 95%, 0.5)';
+            ctx.beginPath(); ctx.arc(canvas.width*0.2, canvas.height*0.2, 50, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = 'hsla(200, 70%, 95%, 0.5)';
+            ctx.beginPath(); ctx.arc(canvas.width*0.8, canvas.height*0.8, 80, 0, Math.PI*2); ctx.fill();
         }
         init(); draw();
-        window.addEventListener('resize', init);
     </script>
 </body>
 </html>
