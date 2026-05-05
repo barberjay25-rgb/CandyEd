@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CandyEd - Aprendizaje Divertido</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-pink: #FF8EBC;
+            --accent-blue: #7DD3FC;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: #FDF2F8;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        #particle-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #FDF2F8 0%, #E0F2FE 100%);
+        }
+        .app-container {
+            width: 94vw;
+            height: 90vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 6px solid white;
+            border-radius: 50px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+        }
+        .logo-wrapper {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        .brand-name {
+            font-size: 5rem;
+            background: linear-gradient(45deg, #FF6FB5, #4FA8E8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+        .slogan {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.5rem;
+            color: #64748b;
+            font-weight: 700;
+            margin-top: -10px;
+        }
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            font-weight: 700;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+    <div class="app-container">
+        <div class="logo-wrapper">
+            <h1 class="brand-name">CandyEd</h1>
+            <p class="slogan">aprendizaje divertido</p>
+        </div>
+        <div class="game-grid">
+            <div class="card">🔢 Números</div>
+            <div class="card">ABC Letras</div>
+        </div>
+    </div>
+    <script>
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            for(let i=0; i<30; i++) {
+                particles.push({
+                    x: Math.random()*canvas.width,
+                    y: Math.random()*canvas.height,
+                    size: Math.random()*20+5,
+                    color: `hsla(${Math.random()*360}, 70%, 80%, 0.4)`
+                });
+            }
+        }
+        function draw() {
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            particles.forEach(p => {
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                ctx.fill();
+            });
+            requestAnimationFrame(draw);
+        }
+        init(); draw();
+    </script>
+</body>
+</html>
