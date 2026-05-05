@@ -1,14 +1,17 @@
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CandyEd - Aprendizaje Divertido</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent-pink: #FF8EBC;
-            --accent-blue: #7DD3FC;
-            --glass-bg: rgba(255, 255, 255, 0.7);
+            --pink: #FF8EBC;
+            --blue: #7DD3FC;
+            --yellow: #FFD93D;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: 'Fredoka', sans-serif;
             background: #FDF2F8;
@@ -25,76 +28,122 @@
             background: linear-gradient(135deg, #FDF2F8 0%, #E0F2FE 100%);
         }
         .app-container {
-            width: 94vw;
-            height: 90vh;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
+            width: 92vw;
+            height: 88vh;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(15px);
             border: 6px solid white;
             border-radius: 50px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.1);
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 40px;
+            padding: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
         }
-        .logo-wrapper {
+        .logo-area {
             text-align: center;
-            margin-bottom: 40px;
-            animation: float 4s ease-in-out infinite;
+            margin: 20px 0 40px;
+            animation: bounce 4s infinite ease-in-out;
         }
-        @keyframes float {
+        @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-10px); }
         }
         .brand-name {
-            font-size: 5rem;
+            font-size: 4.5rem;
             background: linear-gradient(45deg, #FF6FB5, #4FA8E8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin: 0;
         }
         .slogan {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: #64748b;
             font-weight: 700;
-            margin-top: -10px;
+            letter-spacing: 1px;
         }
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
+            width: 100%;
+            max-width: 500px;
         }
         .card {
             background: white;
-            padding: 30px;
-            border-radius: 30px;
-            text-align: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            height: 160px;
+            border-radius: 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #475569;
+            box-shadow: 0 12px 0 #E2E8F0, 0 20px 30px rgba(0,0,0,0.05);
+            transition: all 0.1s;
+            border: 4px solid white;
+            cursor: pointer;
         }
+        /* Efecto de presión para móvil */
+        .card:active {
+            transform: translateY(8px);
+            box-shadow: 0 4px 0 #E2E8F0, 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .card.num { border-bottom: 8px solid var(--pink); color: var(--pink); }
+        .card.let { border-bottom: 8px solid var(--blue); color: var(--blue); }
+        
+        .icon { font-size: 3rem; margin-bottom: 10px; }
     </style>
 </head>
 <body>
     <canvas id="particle-canvas"></canvas>
     <div class="app-container">
-        <div class="logo-wrapper">
-            <h1 ;
+        <div class="logo-area">
+            <h1 class="brand-name">CandyEd</h1>
+            <p class="slogan">aprendizaje divertido</p>
+        </div>
+        <div class="game-grid">
+            <div class="card num" onclick="playEffect()">
+                <span class="icon">🔢</span>
+                NÚMEROS
+            </div>
+            <div class="card let" onclick="playEffect()">
+                <span class="icon">ABC</span>
+                LETRAS
+            </div>
+        </div>
+    </div>
+    <script>
+        // Efecto visual al tocar
+        function playEffect() {
+            // Aquí añadiremos sonidos en el futuro
+            console.log("¡Click mágico!");
+        }
+
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function init() {
+            canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            for(let i=0; i<30; i++) {
+            for(let i=0; i<25; i++) {
                 particles.push({
                     x: Math.random()*canvas.width,
                     y: Math.random()*canvas.height,
-                    size: Math.random()*20+5,
-                    color: `hsla(${Math.random()*360}, 70%, 80%, 0.4)`
+                    vx: (Math.random()-0.5),
+                    vy: (Math.random()-0.5),
+                    size: Math.random()*15+5,
+                    color: `hsla(${Math.random()*360}, 70%, 80%, 0.3)`
                 });
             }
         }
         function draw() {
             ctx.clearRect(0,0,canvas.width, canvas.height);
             particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                if(p.x<0 || p.x>canvas.width) p.vx *= -1;
+                if(p.y<0 || p.y>canvas.height) p.vy *= -1;
                 ctx.fillStyle = p.color;
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
@@ -103,6 +152,7 @@
             requestAnimationFrame(draw);
         }
         init(); draw();
+        window.addEventListener('resize', init);
     </script>
 </body>
 </html>
