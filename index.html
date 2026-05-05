@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -112,6 +113,7 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(-45deg,#FFDEE9,#
   </div>
 
   <!-- MENÚ PRINCIPAL -->
+
   <div id="scr-main" class="screen">
     <div class="brand">CandyEd</div>
     <p class="tagline" id="tagline-main"></p>
@@ -135,6 +137,7 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(-45deg,#FFDEE9,#
   </div>
 
   <!-- DIFICULTAD -->
+
   <div id="scr-difficulty" class="screen">
     <div class="header">
       <button class="back-btn" onclick="showScreen('scr-main')">←</button>
@@ -167,6 +170,7 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(-45deg,#FFDEE9,#
   </div>
 
   <!-- LISTA DE JUEGOS -->
+
   <div id="scr-levels" class="screen">
     <div class="header">
       <button class="back-btn" onclick="showScreen('scr-difficulty')">←</button>
@@ -176,6 +180,7 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(-45deg,#FFDEE9,#
   </div>
 
   <!-- CANCIÓN -->
+
   <div id="scr-song" class="screen">
     <div class="header">
       <button class="back-btn" onclick="pararCancion();showScreen('scr-main')">←</button>
@@ -190,6 +195,7 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(-45deg,#FFDEE9,#
   </div>
 
   <!-- JUEGO -->
+
   <div id="scr-game" class="screen">
     <div class="header">
       <button class="back-btn" onclick="showScreen('scr-levels')">←</button>
@@ -205,6 +211,7 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(-45deg,#FFDEE9,#
   </div>
 
   <!-- VICTORIA -->
+
   <div id="scr-win" class="screen">
     <div class="win-emoji" id="win-emoji">🏆</div>
     <div class="win-title" id="win-title"></div>
@@ -960,5 +967,6 @@ document.addEventListener('click',(e)=>{
   sfxClickRandom();
 });
 </script>
+
 </body>
 </html>
